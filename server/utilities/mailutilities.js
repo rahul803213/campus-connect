@@ -1,5 +1,5 @@
 // emailVerification.js
-require('dotenv').config({path:'.env'});
+require('dotenv').config();
 
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
