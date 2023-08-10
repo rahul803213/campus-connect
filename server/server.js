@@ -5,6 +5,8 @@ const cors = require("cors");
 const db = require("./dbs/db");
 //const fileUpload = require('express-fileupload')
 //routers
+const PORT = process.env.PORT || 4000;
+
 const users = require("./routes/users");
 const posts = require("./routes/posts");
 const colleges = require("./routes/colleges");
@@ -12,7 +14,7 @@ const details = require("./routes/SecretDetails");
 const cloudinary = require("cloudinary");
 //database
 const app = express();
-port = 4000;
+//port = 4000;
 require("dotenv").config();
 
 cloudinary.v2.config({
@@ -47,6 +49,6 @@ app.post("/", (req, res) => {
   res.json({ message: "Data received successfully", data: data });
 });
 
-app.listen(4000, () => {
-  console.log(` is running on http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(` is running on http://localhost:${PORT}`);
 });
