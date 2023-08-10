@@ -5,7 +5,7 @@ const uri = process.env.mongodb_url;
 
 const db = async () => {
   try {
-    await mongoose.connect(uri, {
+    await mongoose.connect("mongodb+srv://Rahulmongodb:Rahul77@cluster0.bgk9r.mongodb.net/social_media?retryWrites=true&w=majority", {
       useNewUrlParser: true,
       useNewUrlParser: true
       
