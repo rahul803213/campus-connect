@@ -1,17 +1,23 @@
-//"use client"
+'use client'
 import React from 'react'
 import Header from 'components/Header/Header.component'
-import HeaderLink from 'components/HeaderLink/HeaderLink.component'
-
+import { useSelector,useDispatch } from 'react-redux'
 import WelcomeLinks from 'components/WelcomeLinks/WelcomeLinks'
 //import { decrement, increment, reset } from "@/redux/features/counterSlice";
 //import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-
+import { useEffect } from 'react'
+import { setCurrentUser } from '@/redux/user/userSlice'
 
 function home() {
- // const user = UseSelector((state) => state.user.currentUser);
-
-  //console.log(user);
+  const user = useSelector((state) => state.userReducer.user);
+  const dispatch=useDispatch();
+  useEffect(() => {
+    const storedToken = localStorage.getItem('jwtToken');
+    if (storedToken) {
+      dispatch(setCurrentUser(storedToken))
+    }
+  }, []);
+  console.log({user:user});
   //const count = useAppSelector((state) => state.counterReducer.value);
   //const dispatch = useAppDispatch();
   return (

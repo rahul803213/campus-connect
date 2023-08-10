@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import Header from '@/components/Header/Header.component'
 import Profile from '@/components/Profile/profile.component'

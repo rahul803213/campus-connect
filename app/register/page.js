@@ -1,3 +1,4 @@
+"use client"
 import SignUpPage from '@/components/signUp/SignUpPage'
 import Header from '@/components/Header/Header.component'
 import React from 'react'

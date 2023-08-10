@@ -5,7 +5,8 @@ const UserModel = (user,token) =>{
         user_id:user._id,
         user_token:token,
         user_email:user.contact_details.Email,
-        user_college:user.academic_details.college
+        user_college:user.academic_details.college,
+        user_profile:user.profile_picture
     }
 }
 

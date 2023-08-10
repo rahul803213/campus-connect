@@ -4,15 +4,22 @@ import {MdOutlineEventSeat} from 'react-icons/md'
 import {FcDepartment} from 'react-icons/fc'
 import {CgProfile} from 'react-icons/cg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useSelector } from 'react-redux'
+import jwtDecode from 'jwt-decode';
+
 //import bceLogo from '../assets/bceLogo.gif'
 export default function Sidebar() {
+ // const user = localStorage.getItem("jwtToken");
+// const decode = jwtDecode(user);
+//  console.log(decode)
+ // console.log({user:user});
   return (
 <>
   <div className="w-[20vw]  h-fit flex text-slate-600 bg-white flex-col items-center rounded-lg py-4">
     {/* application logo  */}
     <div className='flex p-4 w-full justify-start items-center flex flex-col '>
     <AccountCircleIcon  className='m-4'/>
-       <h1 className='text-lg text-center font-bold uppercase'>hello User</h1>
+       <h1 className='text-lg text-center font-bold uppercase'>hello </h1>
     </div>
     <div className='flex flex-col mt-8 w-full '>
         <Item_1 text="Posts">

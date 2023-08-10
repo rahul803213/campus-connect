@@ -2,9 +2,13 @@
 import React, { use, useEffect, useState } from "react";
 import Header from "components/Header/Header.component";
 import Signin from "components/signin/SignIn";
+import { useRouter } from "next/navigation";
+import { useDispatch,useSelector } from "react-redux";
 //import SignInPage from "components/signin/login";
 
 function SignIn() {
+  const user = useSelector(state => state.userReducer.user);
+  const Router = useRouter();
   return (
     <div className="flex flex-col   items-center">
 
@@ -15,7 +19,7 @@ function SignIn() {
 <div className=' relative xl:w-[650px] xl:h-[650px] top-14  w-80 h-80 '>
  <img src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg" alt=""   />
 </div>
-   <Signin /> 
+     <Signin />
 
 
 

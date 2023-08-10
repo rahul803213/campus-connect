@@ -9,7 +9,7 @@ const SignUpPage = () => {
 
   const [formData, setFormData] = useState({
     username: "",
-   // profile_picture: "",
+    file: "",
     email: "",
     password: "",
     confirm_password: "",
@@ -21,6 +21,13 @@ const SignUpPage = () => {
     college_name: "",
   });
 
+  const handleFileChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.files[0],
+    });
+  };
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -30,14 +37,18 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const fd= new FormData(formData);
-    fd.append('image',profile_picture);
+    const fd = new FormData();
+    console.log(formData);
+    for (const key in formData) {
+      if (formData.hasOwnProperty(key)) {
+        fd.append(key, formData[key]);
+      }
+    }
+    // fd.append('image',profile_picture);
     fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: JSON.stringify(fd),
+
+      body: fd,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -99,10 +110,10 @@ const SignUpPage = () => {
                 handleChange={handleChange}
               />
               <FormField
-                name="profile_picture"
-                data={formData.profile_picture}
+                name="file"
+                data={formData.file}
                 type="file"
-                handleChange={handleChange}
+                handleChange={handleFileChange}
               />
               <FormField
                 name="password"

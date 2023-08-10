@@ -1,8 +1,8 @@
 
 const payload= (user) =>{
     return {
-       user_id:user._id,
-       user_email:user.email,
+       user_id:user.contact_details.Email,
+       user_email:user.username,
        is_Verified:user.isVerified
     }
 }
