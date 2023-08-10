@@ -5,7 +5,7 @@ const uri = process.env.mongodb_url;
 
 const db = async () => {
   try {
-    await mongoose.connect(`${uri}`, {
+    await mongoose.connect(uri, {
       useNewUrlParser: true,
       useNewUrlParser: true
       
