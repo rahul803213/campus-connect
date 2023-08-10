@@ -7,7 +7,7 @@ import WelcomeLinks from "components/WelcomeLinks/WelcomeLinks";
 //import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
 import { setCurrentUser } from "@/redux/user/userSlice";
-function home() {
+function Home() {
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -15,7 +15,7 @@ function home() {
     if (storedUserDetails) {
       dispatch(setCurrentUser(storedUserDetails));
     }
-  }, []);
+  }, [dispatch]);
   console.log(user);
   //const count = useAppSelector((state) => state.counterReducer.value);
   //const dispatch = useAppDispatch();
@@ -27,4 +27,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

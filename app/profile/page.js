@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import Header from '@/components/Header/Header.component'
 import Profile from '@/components/Profile/profile.component'
 import { setCurrentUser } from '@/redux/user/userSlice'
-function page() {
+function Page() {
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -14,7 +14,7 @@ function page() {
   if(storedUserDetails) {
     dispatch(setCurrentUser(storedUserDetails));
   }
-  }, []);
+  }, [dispatch]);
   return (
     <div className='flex flex-col w-full items-center gap-10'>
     <Header />
@@ -23,4 +23,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

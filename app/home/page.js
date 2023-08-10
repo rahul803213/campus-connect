@@ -13,7 +13,7 @@ import { fetchPostData } from "@/network/postApi";
 //Import ends here
 
 
-function home() {
+function Home() {
   const dispatch = useDispatch();
   const [post, setPost] = useState();
 
@@ -33,7 +33,7 @@ function home() {
     if (storedUserDetails) {
       dispatch(setCurrentUser(storedUserDetails));
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col items-center gap-10 ">
@@ -67,4 +67,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;
