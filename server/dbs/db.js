@@ -8,8 +8,8 @@ const uri = process.env.mongodb_url
 const db = async () => {
     try {
       await mongoose.connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
+        useNewUrlParser: true
+       
       });
       console.log('Connected to MongoDB');
     } catch (error) {
