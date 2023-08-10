@@ -15,7 +15,7 @@ const cloudinary = require("cloudinary");
 //database
 const app = express();
 //port = 4000;
-require("dotenv").config();
+require('dotenv').config({path:'.env'});
 
 cloudinary.v2.config({
   cloud_name: process.env.cloud_name,
