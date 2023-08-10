@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", users);
 app.use("/college", colleges);
 app.use("/detail", details);
-
+app.use("/post",posts)
 app.get("/", (req, res) => {
   res.json({ name: "rahul" });
 });

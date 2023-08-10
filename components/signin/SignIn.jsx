@@ -8,8 +8,8 @@ function Signin() {
   const dispatch = useDispatch();
   const Router = useRouter();
   const [formData, setFormData] = useState({
-    email: "rahulkr7105018@gmail.com",
-    password: "111111",
+    email: "rahulkr705018@gmail.com",
+    password: "12345",
   });
   //handle change function
   const handlechange = (event) => {
@@ -47,6 +47,7 @@ function Signin() {
      });
       dispatch(setCurrentUser(result));
        localStorage.setItem("jwtToken",result.user_token);
+       sessionStorage.setItem('userDetails' ,JSON.stringify(result));
       console.log( formData );
       Router.push("/home");
     } catch (error) {

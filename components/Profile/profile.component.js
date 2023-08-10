@@ -2,10 +2,14 @@
 import React from 'react'
 import {BiEdit} from 'react-icons/bi'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useSelector } from 'react-redux';
 
 
 
 const Profile = () => {
+    const user = useSelector(state => state.userReducer.user);
+    const profile_uri=user.user_profile;
+    console.log(profile_uri);
     const data = {
         college: 'COLLEGE',
         branch: 'BRANCH',
@@ -40,9 +44,9 @@ const Profile = () => {
                     />
 
                     <div className='flex flex-col gap-4 absolute w-[100px] h-[100px] sm:w-[200px] sm:h-[200px]  rounded-full  -translate-y-2/3 left-[100px]'>
-                        <AccountCircleIcon className='w-full h-full object-cover rounded-full bg-white'/>
-                    <h4 className='text-center font-bold text-lg'>
-                        {data.name}
+             {profile_uri ? <img src={profile_uri} className='w-full h-full object-cover rounded-full bg-white' /> :<AccountCircleIcon className='w-full h-full object-cover rounded-full bg-white'/> }           
+                    <h4 className='text-center font-bold text-2xl'>
+                        {user.user_name}
                     </h4>
                     </div>
                 </div>
@@ -52,8 +56,8 @@ const Profile = () => {
             <div className='flex flex-col flex-1 p-2 justify-center w-full sm:w-1/2   items-end gap-4 bg-slate-100 '>
                 <Details details={'Academic Details'}>
                     <div className='flex flex-col sm:flex-wrap sm:flex-row sm:justify-between sm:gap-x-4  w-full px-4 py-2'>
-                        <Item2 name='college' value={data.college}/>
-                        <Item2 name='branch' value={data.branch} />
+                        <Item2 name='college' value={user.user_college}/>
+                        <Item2 name='branch' value={user.user_email} />
                         <Item2 name='course' value={data.course} />
                         <Item2 name='session' value={data.session} />
                         <Item2 name='rollno' value={data.rollNo} />

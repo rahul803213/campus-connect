@@ -4,8 +4,8 @@ import {MdOutlineEventSeat} from 'react-icons/md'
 import {FcDepartment} from 'react-icons/fc'
 import {CgProfile} from 'react-icons/cg'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useSelector } from 'react-redux'
 import jwtDecode from 'jwt-decode';
+import { useSelector } from 'react-redux'
 
 //import bceLogo from '../assets/bceLogo.gif'
 export default function Sidebar() {
@@ -13,13 +13,18 @@ export default function Sidebar() {
 // const decode = jwtDecode(user);
 //  console.log(decode)
  // console.log({user:user});
+ const user = useSelector(state => state.userReducer.user);
+ console.log(user);
   return (
 <>
   <div className="w-[20vw]  h-fit flex text-slate-600 bg-white flex-col items-center rounded-lg py-4">
     {/* application logo  */}
     <div className='flex p-4 w-full justify-start items-center flex flex-col '>
-    <AccountCircleIcon  className='m-4'/>
-       <h1 className='text-lg text-center font-bold uppercase'>hello </h1>
+    <img className="w-10 h-10 rounded-full" src={user.user_profile} alt="Rounded avatar" />
+
+       <h1 className='text-lg text-center font-bold uppercase'>hello 
+      <span className='text-green-400'> <br /> {user.user_name}</span> 
+       </h1>
     </div>
     <div className='flex flex-col mt-8 w-full '>
         <Item_1 text="Posts">

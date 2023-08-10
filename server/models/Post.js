@@ -1,22 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-
-
-const PostSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema(
+  {
     poster: {
       type: mongoose.Types.ObjectId,
-      ref: "user",
-      required: true,
+      ref: "User",
+      //  required: true,
     },
-    title: {
+    image: {
       type: String,
-      required: true,
-      maxLength: [80, "Must be no more than 80 characters"],
+      // required: true,
+      //  maxLength: [80, "Must be no more than 80 characters"],
     },
     content: {
       type: String,
-      required: true,
-      maxLength: [8000, "Must be no more than 8000 characters"],
+      //   required: true,
+      //  maxLength: [8000, "Must be no more than 8000 characters"],
     },
     likeCount: {
       type: Number,
@@ -31,7 +30,7 @@ const PostSchema = new mongoose.Schema({
       default: false,
     },
   },
-  { timestamps: true })
+  { timestamps: true }
+);
 
-
-module.exports = mongoose.model("Post",PostSchema);
+module.exports = mongoose.model("Post", PostSchema);
