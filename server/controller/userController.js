@@ -84,7 +84,7 @@ const register = async (req, res) => {
       )
     )
     .then(() => {
-      const token = jwt.sign(payload(user), "hello");
+      const token = jwt.sign(payload(user), process.env.jwt_secret_key);
       return res.json({
         user_data: UserUtilities.UserModel(user, token),
         email_response: { message: "verification email sent" },
