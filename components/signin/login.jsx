@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BiSolidShow, BiSolidHide } from "react-icons/bi";
 import { BsFacebook, BsGoogle } from "react-icons/bs";
+import { BASE_URL } from '@/ClientHelper/config';
+
 // import CustomButton from "../CustomButton/CustomButton.component";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { headers } from "next/dist/client/components/headers";
@@ -30,7 +32,7 @@ const SignInPage = () => {
   const handleSubmit =  async(e) =>{
     e.preventDefault();
     
-    const url = "https://collegebookbce.onrender.com//user/login";
+    const url = `${BASE_URL}/user/login`;
     if(form.email=="" || form.password=="") return res.json({error:"one of two or may both is empty"});
     try{
         const response= await  fetch(url,

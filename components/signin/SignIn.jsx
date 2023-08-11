@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { BASE_URL } from "@/ClientHelper/config";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { setCurrentUser } from "@/redux/user/userSlice";
@@ -24,7 +25,7 @@ function Signin() {
 //handle submit functions
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `https://collegebookbce.onrender.com/user/login`
+    const url = `${BASE_URL}/user/login`
     if (formData.email == "" || formData.password == "")
       return res.json({ error: "one of two or may both is empty" });
     try {
@@ -35,6 +36,7 @@ function Signin() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": BASE_URL
           },
           body: JSON.stringify(formData),
         }

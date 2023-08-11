@@ -2,9 +2,11 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
+import { BASE_URL } from '@/ClientHelper/config';
+
 import { useSelector } from "react-redux";
 const SignUpPage = () => {
-  const url = "https://collegebookbce.onrender.com/user/register";
+  const url = `${BASE_URL}/user/register`;
   const Router = useRouter();
   const user = useSelector(state => state.userReducer);
   console.log({user_sign_up:user});

@@ -4,7 +4,12 @@ require('dotenv').config();
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 
-
+if(process.env.NODE_ENV=='production'){
+  const url="https://collegebookbce.onrender.com"
+}
+else{
+  const url="http://localhost:4000"
+}
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
   service: 'Gmail',
@@ -24,7 +29,7 @@ const generateVerificationToken = () => {
 
 // Send the verification email
 const sendVerificationEmail = (email, verificationToken) => {
-  const verificationLink = `https://collegebookbce.onrender.com/user/verify?token=${verificationToken}`;
+  const verificationLink = `${url}/user/verify?token=${verificationToken}`;
   const mailOptions = {
     from: process.env.my_email,
     to: email,

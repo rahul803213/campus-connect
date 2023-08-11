@@ -32,6 +32,12 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', "http://localhost:3000");
+  // Other headers and settings
+  next();
+});
 //app.use(cors({
 //   origin: ['https://localhost:3000/signup','https://localhost:4000']
 //}));

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-
+import { BASE_URL } from '@/ClientHelper/config';
 const PostCreate = () => {
 
   const user = useSelector(state => state.userReducer.user.user_id);
@@ -34,7 +34,7 @@ const PostCreate = () => {
     e.preventDefault();
     setContent({...content,poster_id:user});
     console.log({"data":content})
-    const url= "https://collegebookbce.onrender.com/post/create";
+    const url= `${BASE_URL}/post/create`;
     const fd = new FormData();
     //console.log(formData);
     for (const key in content) {
