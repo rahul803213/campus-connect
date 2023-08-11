@@ -1,15 +1,19 @@
 "use client"
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import { BASE_URL } from '@/ClientHelper/config';
-const PostCreate = () => {
+import { useEffect } from 'react';
+const PostCreate = ({user}) => {
 
-  const user = useSelector(state => state.userReducer.user.user_id);
+  //const user = useSelector(state => state.userReducer.user.user_id);
   const [content, setContent] = useState({
-    poster_id: user ,
+    poster_id: {user} ,
     content:'',
     file:''
   });
+  useEffect(() => {
+    setContent({...content,poster_id:user});
+  }, [user]);
+  //setContent({...content,poster_id:user});
   console.log({"user":user})
   // console.log({"post_create_id":content});
 

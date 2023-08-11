@@ -17,7 +17,7 @@ function Header() {
 
  
   return (
-    <header className="flex justify-between items-center py-4 w-[80%]">
+    <header className="flex justify-between items-center py-4 w-full sm:w-[80%] border border-green-400 ">
       <Link href={'/'} className="flex flex-col relative w-36 h-10 cursor-pointer">
        <h2 className="uppercase text-3xl text-center font-bold" >campus<span className="text-blue-900">connect.</span></h2>
        <h1 className="font-bold " style={{letterSpacing:"8px"}}>connect.share.grow</h1>

@@ -9,11 +9,14 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "@/redux/user/userSlice";
 import PostCreate from "@/components/PostCreate/postcreate.component";
 import { fetchPostData } from "@/network/postApi";
+import { useSelector } from 'react-redux';
 
 //Import ends here
 
 
 function Home() {
+  const user = useSelector(state => state.userReducer.user.user_id);
+
   const dispatch = useDispatch();
   const [post, setPost] = useState();
 
@@ -29,7 +32,7 @@ function Home() {
 
     fetchData();
     const storedUserDetails = JSON.parse(sessionStorage.getItem("userDetails"));
-    console.log(storedUserDetails);
+    console.log({"storedUserDetails":storedUserDetails});
     if (storedUserDetails) {
       dispatch(setCurrentUser(storedUserDetails));
     }
@@ -41,7 +44,7 @@ function Home() {
       <div className="flex flex-row justify-center  gap-[100px] mx-20">
         <Sidebar />
         <div className="flex flex-col w-[50vw]">
-          <PostCreate />
+          <PostCreate user={user}/>
           {post ? (
             post.map((data) => (
               <Post
