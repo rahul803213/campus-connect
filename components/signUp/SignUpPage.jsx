@@ -50,7 +50,9 @@ const SignUpPage = () => {
     // fd.append('image',profile_picture);
     fetch(url, {
       method: "POST",
-
+      headers:{
+        "Access-Control-Allow-Origin": BASE_URL,
+      },
       body: fd,
     })
       .then((response) => response.json())
