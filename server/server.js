@@ -23,7 +23,15 @@ cloudinary.v2.config({
   api_secret: process.env.cloud_api_secret,
 });
 //essential for cross origin single line is perfect but we have to extra when it comes to production
-app.use(cors());
+const corsOptions = {
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:4000",
+    "https://velvety-babka-4ae196.netlify.app",
+  ],
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+};
+app.use(cors(corsOptions));
 //app.use(cors({
 //   origin: ['https://localhost:3000/signup','https://localhost:4000']
 //}));
