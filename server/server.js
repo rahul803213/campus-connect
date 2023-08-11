@@ -32,9 +32,16 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
 app.use(cors(corsOptions));
+var allow_origin="";
+if(process.env.NODE_ENV=='production'){
+   allow_origin="https://velvety-babka-4ae196.netlify.app"
+}
+else{
+   allow_origin="http://localhost:3000"
+}
 
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', "https://velvety-babka-4ae196.netlify.app");
+  res.setHeader('Access-Control-Allow-Origin', allow_origin);
   // Other headers and settings
   next();
 });
