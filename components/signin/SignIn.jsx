@@ -24,7 +24,7 @@ function Signin() {
 //handle submit functions
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${process.env.NEXT_PUBLIC_BACKEND}/user/login`
+    const url = `https://collegebookbce.onrender.com/user/login`
     if (formData.email == "" || formData.password == "")
       return res.json({ error: "one of two or may both is empty" });
     try {
