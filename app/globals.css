@@ -6,7 +6,7 @@
 
 @layer base{
   body{
-      @apply bg-gray-100 px-2 sm:px-8 
+      @apply bg-gray-100 sm:px-8 w-full border border-red-700  flex flex-col items-center min-h-screen 
   }
 }
 

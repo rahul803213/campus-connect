@@ -5,7 +5,7 @@ import {IoNewspaperOutline} from 'react-icons/io5'
 export default function NewsHighlight(props) {
   return (
 <>
-  <div className=" w-full  h-fit flex flex-col justify-start items-start text-slate-800 bg-slate-200 rounded-lg font-serif ">
+  <div className=" w-full  h-fit flex flex-col justify-start items-start text-slate-800 bg-white rounded-lg font-serif">
     {/* heading section */}
     <div className='flex p-2 lg:p-4 gap-3 items-center flex-wrap'>
         {/* heading-icon */}
@@ -28,7 +28,7 @@ export default function NewsHighlight(props) {
 const News = ({children}) => {
   return (
 <>  
-  <div className="flex p-2 mx-4 my-2 rounded-lg bg-slate-200 text-center text-sm text-slate-600">
+  <div className="flex p-2 mx-4 my-2 rounded-lg bg-slate-100 text-center text-sm text-slate-600">
     {children}
   </div>
 </>

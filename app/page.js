@@ -20,8 +20,7 @@ function Home() {
   //const count = useAppSelector((state) => state.counterReducer.value);
   //const dispatch = useAppDispatch();
   return (
-    <div className="flex flex-col   items-center">
-      <Header />
+    <div className="flex flex-col items-center border border-pink-600 px-2 relative">
       <WelcomeLinks />
     </div>
   );

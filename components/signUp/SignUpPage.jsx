@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs";
 import { BASE_URL } from '@/ClientHelper/config';
-
-import { useSelector } from "react-redux";
+import { setCurrentUser } from "@/redux/user/userSlice";
+import { useSelector,useDispatch } from "react-redux";
+import { SignUpUser } from "@/network/userApi";
 const SignUpPage = () => {
   const url = `${BASE_URL}/user/register`;
+  const dispatch = useDispatch();
   const Router = useRouter();
   const user = useSelector(state => state.userReducer);
   console.log({user_sign_up:user});
@@ -40,33 +42,14 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const fd = new FormData();
-    console.log(formData);
-    for (const key in formData) {
-      if (formData.hasOwnProperty(key)) {
-        fd.append(key, formData[key]);
-      }
-    }
-    // fd.append('image',profile_picture);
-    fetch(url, {
-      method: "POST",
-      headers:{
-        "Access-Control-Allow-Origin": BASE_URL,
-      },
-      body: fd,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Data successfully sent:", data);
-        Router.push("/home");
-        // Handle the response data here
-      })
-      .catch((error) => {
-        console.error("Error sending data:", error);
-        // Handle errors here
-      });
+   
+     
+      const user = await SignUpUser(formData);
+      console.log({"user after signup":user})
+      dispatch(setCurrentUser(user));
+      Router.push('/home');
     // save formdata in backend and navigate to home page
-    console.log("submit button clicked", formData);
+   // console.log("submit button clicked", formData);
   };
   return (
     <div className="w-full h-full flex flex-wrap ">

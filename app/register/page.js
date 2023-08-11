@@ -6,7 +6,7 @@ SignUpPage
 function Register() {
   return (
     <div className="flex flex-col   items-center gap-10">
-      <Header />
+      
       <SignUpPage />
     </div>
   )

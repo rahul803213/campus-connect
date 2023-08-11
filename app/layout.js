@@ -1,5 +1,14 @@
 import './globals.css'
 import { Providers } from '@/redux/provider'
+import Header from '@/components/Header/Header.component'
+import HeaderLink from '@/components/HeaderLink/HeaderLink.component';
+
+import { ExploreSharp, Margin } from "@mui/icons-material";
+// import Link from "next/link";
+import { GroupSharp } from "@mui/icons-material";
+import { OndemandVideoSharp } from "@mui/icons-material";
+import { BusinessCenterSharp } from "@mui/icons-material";
+import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 
 export const metadata = {
   title: 'Create Next App',
@@ -9,10 +18,19 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body >
-     <Providers>
-     {children}
-     </Providers>
+    <body >
+      <Providers>
+        <Header />
+        {children}
+
+        <div className="flex lg:hidden bg-slate-900 w-full justify-between px-4 p-2 items-center fixed bottom-0">
+          <HeaderLink Icon={ExploreSharp}  text="Discover" link="/home" />
+          <HeaderLink Icon={GroupSharp} text="People" link="/search"/>
+          <HeaderLink Icon={OndemandVideoSharp} text="Learning" link="/course"/>
+          <HeaderLink Icon={BusinessCenterSharp} text="Jobs" link="/student"/>
+          <HeaderLink Icon={AccountCircleSharpIcon} link="/profile" text="Profile"   />
+        </div>
+      </Providers>
       
       
       

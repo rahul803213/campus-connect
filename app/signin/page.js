@@ -9,18 +9,16 @@ function SignIn() {
   const user = useSelector((state) => state.userReducer.user);
   const Router = useRouter();
   return (
-    <div className="flex flex-col   items-center">
-      <Header />
-
-      <div className="flex flex-col xl:flex-row justify-center xl:justify-between xl:items-top items-center max-w-screen-xl mx-auto  w-[100%]">
-        <div className=" relative xl:w-[650px] xl:h-[650px] top-14  w-80 h-80 ">
-          <img
-            src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg"
-            alt=""
-          />
-        </div>
-        <Signin />
+    <div className="flex flex-col md:flex-row justify-center gap-6 items-center max-w-screen-xl mx-auto w-full border border-blue-600 md:gap-4 mb-10 lg:gap-10">
+    {/* yahan image sahi krna hai */}
+      <div className=" md:w-[500px] md:h-[500px] w-80 h-80 border border-red-400">
+        <img
+          src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg"
+          alt="signIn"
+          className="w-full h-full object-cover"
+        />
       </div>
+      <Signin />
     </div>
   );
 }

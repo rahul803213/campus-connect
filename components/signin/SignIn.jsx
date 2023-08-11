@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { BASE_URL } from "@/ClientHelper/config";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { SignInUser } from "@/network/userApi";
 import { setCurrentUser } from "@/redux/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
+
 function Signin() {
   const dispatch = useDispatch();
   const Router = useRouter();
@@ -25,41 +27,29 @@ function Signin() {
 //handle submit functions
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const url = `${BASE_URL}/user/login`
+   // const url = `${BASE_URL}/user/login`
     if (formData.email == "" || formData.password == "")
       return res.json({ error: "one of two or may both is empty" });
     try {
-      const response = await fetch(
-        url,
-
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": BASE_URL
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-      const result = await response.json();
-      console.log(result);
-     setFormData({
-      email:"pk",
-      password:"pk"
-     });
+      
+      const result = await SignInUser(formData);
+   //   console.log(result);
+    
       dispatch(setCurrentUser(result));
+
        localStorage.setItem("jwtToken",result.user_token);
        sessionStorage.setItem('userDetails' ,JSON.stringify(result));
-      console.log( formData );
+
+   //   console.log( formData );
       Router.push("/home");
     } catch (error) {
-      console.error("error fetching data", error);
+      console.error("error fetching data at SignIn Component", error);
     }
     // console.log(formData);
   };
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="flex flex-col justify-center px-6 lg:px-8 border border-red-800 min-h-screen">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         {/* <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" /> */}
 

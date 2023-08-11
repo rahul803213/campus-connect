@@ -17,13 +17,13 @@ function Header() {
 
  
   return (
-    <header className="flex justify-between items-center py-4 w-full sm:w-[80%] border border-green-400 ">
-      <Link href={'/'} className="flex flex-col relative w-36 h-10 cursor-pointer">
-       <h2 className="uppercase text-3xl text-center font-bold" >campus<span className="text-blue-900">connect.</span></h2>
-       <h1 className="font-bold " style={{letterSpacing:"8px"}}>connect.share.grow</h1>
+    <header className="flex justify-between items-center py-2 w-full md:w-[80%] px-2 h-[70px] md:h-[90px] mb-6 border border-green-300">
+      <Link href={'/'} className="flex flex-col cursor-pointer items-start">
+       <h2 className="uppercase text-sm sm:text-2xl font-bold" >campus<span className="text-blue-900">connect.</span></h2>
+       <h1 className="font-bold tracking-widest sm:tracking-[5px] " >connect.share.grow.</h1>
       </Link>
-      <div className="flex items-center sm:divide-x divide-gray-300">
-        <div className="hidden sm:flex space-x-8 pr-4">
+      <div className="flex items-center justify-between gap-8 h-full">
+        <div className="hidden lg:flex gap-6 p-2 items-center">
           <HeaderLink Icon={ExploreSharp}  text="Discover" link="/home" />
           <HeaderLink Icon={GroupSharp} text="People" link="/search"/>
 
@@ -31,11 +31,10 @@ function Header() {
           <HeaderLink Icon={BusinessCenterSharp} text="Jobs" link="/student"/>
           <HeaderLink Icon={AccountCircleSharpIcon} link="/profile" text="Profile"   />
         </div>
-        <div className="pl-5">
+        <div className="flex-1 flex items-center h-full" >
           <Link
-            className="text-blue-700 
-    font-semibold rounded-full border border-2
-     border-blue-600 px-5 py-1.5 transition-all hover:bg-blue-600 hover:text-white"
+            className="text-blue-700 font-semibold rounded-lg border border-2
+            border-blue-700 px-4 py-2 transition-all hover:bg-blue-700 hover:text-white hover:border-blue-700"
             href={"/signin"}
           >
             Sign In
