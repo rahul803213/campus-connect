@@ -34,7 +34,7 @@ const PostCreate = () => {
     e.preventDefault();
     setContent({...content,poster_id:user});
     console.log({"data":content})
-    const url= `${process.env.NEXT_PUBLIC_BACKEND}/post/create`;
+    const url= "https://collegebookbce.onrender.com/post/create";
     const fd = new FormData();
     //console.log(formData);
     for (const key in content) {
