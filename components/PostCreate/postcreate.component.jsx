@@ -34,7 +34,7 @@ const PostCreate = () => {
     e.preventDefault();
     setContent({...content,poster_id:user});
     console.log({"data":content})
-    const url= "http://localhost:4000/post/create";
+    const url= `${process.env.NEXT_PUBLIC_BACKEND}/post/create`;
     const fd = new FormData();
     //console.log(formData);
     for (const key in content) {

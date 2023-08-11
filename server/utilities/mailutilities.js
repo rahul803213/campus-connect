@@ -24,7 +24,7 @@ const generateVerificationToken = () => {
 
 // Send the verification email
 const sendVerificationEmail = (email, verificationToken) => {
-  const verificationLink = `http://localhost:4000/user/verify?token=${verificationToken}`;
+  const verificationLink = `https://collegebookbce.onrender.com/user/verify?token=${verificationToken}`;
   const mailOptions = {
     from: process.env.my_email,
     to: email,
