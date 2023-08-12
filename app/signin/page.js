@@ -9,9 +9,9 @@ function SignIn() {
   const user = useSelector((state) => state.userReducer.user);
   const Router = useRouter();
   return (
-    <div className="flex flex-col md:flex-row justify-center gap-6 items-center max-w-screen-xl mx-auto w-full border border-blue-600 md:gap-4 mb-10 lg:gap-10">
+    <div className="flex flex-col md:flex-row justify-center gap-6 items-center max-w-screen-xl mx-auto w-full border border-2 border-blue-600 md:gap-4 mb-10 lg:gap-10" >
     {/* yahan image sahi krna hai */}
-      <div className=" md:w-[500px] md:h-[500px] w-80 h-80 border border-red-400">
+      <div className=" md:w-1/2 md:h-full w-80 h-80 border border-red-400">
         <img
           src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg"
           alt="signIn"

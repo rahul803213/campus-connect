@@ -49,8 +49,8 @@ function Signin() {
   };
 
   return (
-    <div className="flex flex-col justify-center px-6 lg:px-8 border border-red-800 min-h-screen">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex flex-col justify-center px-6 lg:px-8 border border-2 border-red-800 min-h-screen md:h-[60vh]">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm border border-green-800">
         {/* <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" /> */}
 
         <h2 className="mt-10 text-center text-5xl font-bold leading-9 tracking-tight text-gray-900">
@@ -58,7 +58,7 @@ function Signin() {
         </h2>
       </div>
 
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm border border-green-400">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium leading-6 text-gray-900 ">
