@@ -1,12 +1,15 @@
 "use client"
 import React from 'react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch,useSelector } from 'react-redux'
+import { useRouter } from 'next/navigation'
 import Header from '@/components/Header/Header.component'
 import Profile from '@/components/Profile/profile.component'
+
 import { setCurrentUser } from '@/redux/user/userSlice'
 function Page() {
-
+  const Router = useRouter();
+  const isLoggedIn = useSelector(state => state.userReducer.LoggedIn)
   const dispatch = useDispatch();
   useEffect(() => {
    
@@ -16,10 +19,17 @@ function Page() {
   }
   }, [dispatch]);
   return (
-    <div className='flex flex-col w-full items-center gap-10'>
+    <>
+      {
+        isLoggedIn ?  <div className='flex flex-col w-full items-center gap-10'>
     
-      <Profile />
-    </div>
+    <Profile />
+  </div> 
+  :
+  Router.push('/signin')
+      }
+    </>
+   
   )
 }
 

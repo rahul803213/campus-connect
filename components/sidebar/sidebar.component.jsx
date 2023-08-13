@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BsPostcard } from "react-icons/bs";
 import { MdOutlineEventSeat } from "react-icons/md";
 import { FcDepartment } from "react-icons/fc";
@@ -6,17 +6,34 @@ import { CgProfile } from "react-icons/cg";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import jwtDecode from "jwt-decode";
 import { useSelector } from "react-redux";
-
+import Spinner from "../Spinner/Spinner";
+import { useState } from "react";
+import { setCurrentUser } from "@/redux/user/userSlice";
+import { useDispatch } from "react-redux";
 //import bceLogo from '../assets/bceLogo.gif'
 export default function Sidebar() {
   // const user = localStorage.getItem("jwtToken");
+  const dispatch = useDispatch();
   // const decode = jwtDecode(user);
   //  console.log(decode)
   // console.log({user:user});
+  const [loading,setLoading] = useState(true);
+ 
+     useEffect(()=> {
+      setLoading(true);
+      const storedUserDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+       if(storedUserDetails) {
+         dispatch(setCurrentUser(storedUserDetails));
+       }
+       setLoading(false);
+     },[dispatch])
+
+
   const user = useSelector((state) => state.userReducer.user);
+  //setLoading(false);
   console.log(user);
   return (
-    <>
+    <>{ loading ? <Spinner /> :
       <div className="w-1/6  h-fit hidden sm:flex text-slate-600 bg-white flex-col items-center rounded-lg py-4">
         {/* application logo  */}
         <div className="flex p-4 w-full justify-start items-center flex flex-col ">
@@ -49,6 +66,7 @@ export default function Sidebar() {
           </Item_1>
         </div>
       </div>
+    }
     </>
   );
 }

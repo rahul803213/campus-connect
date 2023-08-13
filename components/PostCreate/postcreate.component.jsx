@@ -7,8 +7,19 @@ import {RiArticleLine} from 'react-icons/ri'
 
 import { useEffect } from "react";
 import { CreatePost } from "@/network/postApi";
+import { useDispatch } from "react-redux";
+import { addPost } from "@/redux/post/postSlice";
+import { useSelector } from "react-redux";
+import Alert from "../Alert/Alert";
 
-const PostCreate = ({ user }) => {
+const PostCreate = ( ) => {
+ const user_id = useSelector(state => state.userReducer.user.user_id);
+ const dispatch= useDispatch();
+ const [loading,setLoading] = useState(false);
+ const [selectedFile, setSelectedFile] = useState(null);
+
+ const [message, setMessage] = useState(null);
+ const [messageType, setMessageType] = useState('');
 
 
   const [content, setContent] = useState({
@@ -19,8 +30,8 @@ const PostCreate = ({ user }) => {
 
 
   useEffect(() => {
-    setContent({ ...content, poster_id: user });
-  }, [user]);
+    setContent({ ...content, poster_id: user_id });
+  }, [user_id]);
 
   //console.log({ user: user });
 
@@ -29,7 +40,7 @@ const PostCreate = ({ user }) => {
 
     setContent({ ...content, [name]: value });
     // setContent({...content,poster_id:user})
-    console.log(content);
+   // console.log(content);
   };
 
   const handleFileChange = (e) => {
@@ -37,20 +48,45 @@ const PostCreate = ({ user }) => {
       ...content,
       [e.target.name]: e.target.files[0],
     });
+    const file = e.target.files[0];
+    setSelectedFile(file);
   };
 
   const handlePostSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
-    setContent({ ...content, poster_id: user });
-    console.log({ data: content });
+    setContent({ ...content, poster_id: user_id });
+   // console.log({ data: content });
 
-    const res = await CreatePost(content);
+    const response = await CreatePost(content);
 
-    console.log({ "data after post create post": res });
+
+    if (response.success) {
+      setMessage("Data posted Successfully");
+      setMessageType('success');
+     // setPostData(response.data); // Set the returned data
+    } else {
+      setMessage(response.message);
+      setMessageType('error');
+    }
+
+   
+
+    console.log({ "data after post create post": response.data });
     // Handle the post submission logic here
   //  console.log("Post content:", content);
-    setContent({});
+  //dispatch(addPost(response.data));
+  
+    setContent({content: "",
+    file: ""});
+    console.log("i am running")
+    setSelectedFile(null)
+    setTimeout(() => {
+      setMessage(null);
+    }, 5000);
+    setLoading(false);
   };
+  const selectedFileName = selectedFile ? selectedFile.name : '';
 
   return (
     <div className="bg-white rounded-lg p-4 shadow-md w-full">
@@ -76,6 +112,7 @@ const PostCreate = ({ user }) => {
             />
             <BsImage className=' w-[20px] h-[20px] mr-2 text-blue-500'/>
             <span className='text-xs font-semibold text-gray-700 capitalize'>photo</span>
+            <div>{selectedFileName}</div>
           </label>
           <Link 
             href='/events' 
@@ -95,11 +132,14 @@ const PostCreate = ({ user }) => {
         <div className="flex justify-end items-end  ">
           <button
             type="submit"
+            disabled={loading}
             className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-all w-[100px] sm:w-[150px]  "
             // disabled={!content.content.trim()}
           >
-            Post
+           {loading ?' Posting...' : 'Post'}
           </button>
+          {message && <Alert type={messageType} message={message} />}
+      
         </div>
       </form>
     </div>

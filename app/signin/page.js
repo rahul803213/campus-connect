@@ -6,12 +6,15 @@ import { useRouter } from "next/navigation";
 import {  useSelector } from "react-redux";
 
 function SignIn() {
-  const user = useSelector((state) => state.userReducer.user);
+  //const isLoggedIn = useSelector((state) => state.userReducer.user);
   const Router = useRouter();
+  
   return (
-    <div className="flex flex-col md:flex-row justify-center gap-6 items-center max-w-screen-xl mx-auto w-full border border-2 border-blue-600 md:gap-4 lg:gap-10 h-[490px]" >
+    <>
+   
+    <div className="flex flex-col md:flex-row justify-center gap-6 items-center max-w-screen-xl mx-auto w-full md:gap-4 lg:gap-10 h-auto md:h-[500px] md:px-[50px] mb-[50px] md:mb-[80px] " >
       {/* yahan image sahi krna hai */}
-      <div className=" md:w-1/2 h-full w-80 h-80 border border-red-400">
+      <div className=" w-full md:w-1/2 h-full w-80 h-80 ">
         <img
           src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg"
           alt="signIn"
@@ -20,6 +23,7 @@ function SignIn() {
       </div>
       <Signin />
     </div>
+    </>
   );
 }
 

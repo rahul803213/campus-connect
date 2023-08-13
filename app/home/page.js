@@ -5,58 +5,72 @@ import Sidebar from "@/components/sidebar/sidebar.component";
 import Header from "@/components/Header/Header.component";
 import NewsHighlight from "@/components/NewsBar/NewsBar.Component";
 import Post from "@/components/Post/Post.component";
-import { setCurrentUser } from "@/redux/user/userSlice";
+import { removeCurrentUser, setCurrentUser } from "@/redux/user/userSlice";
 import PostCreate from "@/components/PostCreate/postcreate.component";
 import { fetchPostData } from "@/network/postApi";
 import { useSelector,useDispatch } from 'react-redux';
-
+import { useRouter } from "next/navigation";
+import { setPosts } from "@/redux/post/postSlice";
+import PostParent from "@/components/PostParent./PostParent";
+import Spinner from "@/components/Spinner/Spinner";
+import { getTokenFromLocal, removeTokenFromLocalMeansLogout } from "@/ClientHelper/authHelper";
 //Import ends here
 
 
+const areEqual = (prevProps, nextProps) => {
+  // Only re-render if the user prop changes
+  return prevProps.posts === nextProps.posts;
+};
+
+
+const MemoizedPostParent = React.memo(PostParent, areEqual);
+
 function Home() {
-  const user = useSelector(state => state.userReducer.user.user_id);
+  const Router = useRouter();
+  //const dispatch = useDispatch();
+ // const user = useSelector(state=> state.userReducer.user);
+  //const post = useSelector(state=> state.postReducer.posts);
+  // console.log({"post from reduc":post})
+   const token = getTokenFromLocal();
+  
 
-  const dispatch = useDispatch();
-  const [post, setPost] = useState();
 
-  useEffect(() => {
+  
+ // const [post, setPost] = useState();
+  /* useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
-      
+    
         const data = await fetchPostData();
-     setPost(data);
+     dispatch(setPosts(data));
        // setPosts(data);
+       const storedUserDetails = JSON.parse(sessionStorage.getItem('userDetails'));
+       if(storedUserDetails) {
+         dispatch(setCurrentUser(storedUserDetails));
+       }
      
     };
-
+    
     fetchData();
-  // const postArray = JSON.parse(sessionStorage.getItem('postArray'))
-    const storedUserDetails = JSON.parse(sessionStorage.getItem("userDetails"));
-    console.log({"storedUserDetails":storedUserDetails});
-    if (storedUserDetails) {
-      dispatch(setCurrentUser(storedUserDetails));
-    }
-  }, [dispatch]);
+  // const postArray = JSON.parse(sessionStorage.getItem('postArray'));
+  setLoading(false);
+  
+  }, [dispatch]); */
 
-  return (
-      
-  <div className="flex flex-col sm:flex-row justify-center gap-4 border border-2 border-blue-400 mb-[20px] w-full">
+
+  
+
+
+
+  return ( 
+     <> { 
+      !(token) ? Router.push('/signin'):
+     
+  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] w-full">
     <Sidebar />
-    <div className="flex flex-col w-full sm:w-3/6  border border-red-900 ">
-      <PostCreate user={user}/>
-      {post ? (
-        post.map((data) => (
-          <Post
-            key={data._id}
-            username={data.poster.username}
-            content={data.content}
-            image={data.image}
-            user_profile={data.poster.profileImage}
-          />
-          // console.log(data.poster.username)
-        ))
-      ) : (
-        <h1>No Post</h1>
-      )}
+    <div className="flex flex-col w-full sm:w-3/6   ">
+      <PostCreate   />
+     <MemoizedPostParent />
     </div>
 
     {/* <NewsHighlight name="Latest News"/> */}
@@ -65,6 +79,8 @@ function Home() {
       <NewsHighlight name="News Highlights" />
     </div>
   </div>
+     }
+  </> 
   );
 }
 

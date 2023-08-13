@@ -4,10 +4,11 @@ export const  fetchPostData = async () => {
       //  console.log({'env is working':process.env.NEXT_PUBLIC_BACKEND})
       const response = await fetch(`${BASE_URL}/post`);
       const jsonData = await response.json();
-      sessionStorage.setItem('postArray' ,JSON.stringify(jsonData));
-      return jsonData;
+     // sessionStorage.setItem('postArray' ,JSON.stringify(jsonData));
+    return jsonData;
     } catch (error) {
-      console.error("Error fetching data:", error);
+      return { success: false, message: 'An error occurred while performing the action.' };
+
     }
   };
 
@@ -21,13 +22,19 @@ export const  fetchPostData = async () => {
             fd.append(key, content[key]);
           }
         }
-        const data = await  fetch(url,{
+        const response = await  fetch(url,{
             method:"POST",
             
             body:fd
-          })
-        return await data.json();
+          });
+          const jsonData = await response.json();
+          if(response.ok)
+          return { success: true, data:jsonData, message: response.message };
+        else{
+          return { success: false, message: 'An error occurred while performing the action.' };
+        }
     }
     catch(error){
-console.log({"error in create post function":error})    }
-  }
+      return { success: false, message: 'An error occurred while performing the action.' };
+      }
+    }

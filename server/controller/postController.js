@@ -5,10 +5,11 @@ const cloudinary = require('cloudinary').v2;
 const createPost = async (req, res) => {
   const { poster_id, content } = req.body;
     const file = req.file;
-    const data_uri = getDataUri(file);
-    console.log(data_uri)
     var profile_uri="";
-    try {
+    if(file){
+      const data_uri = getDataUri(file);
+
+      try {
         const uploadResult = await cloudinary.uploader.upload(data_uri.content);
         console.log("Upload result:", uploadResult);
         // return uploadResult;
@@ -17,6 +18,11 @@ const createPost = async (req, res) => {
         console.error("Error uploading to Cloudinary:", error);
         // throw error; // Rethrow the error to propagate it to the calling code
       }
+    }
+   
+    //console.log(data_uri)
+   
+   
   const post = new Post({
     poster: poster_id,
     content: content,
@@ -29,7 +35,7 @@ const createPost = async (req, res) => {
 };
 
 const fetchPost = async (req, res) => {
-  const posts = await Post.find().populate("poster", "-password").lean();
+  const posts = await Post.find().sort({createdAt:-1}).populate("poster", "-password").lean();
   res.json(posts);
 };
 

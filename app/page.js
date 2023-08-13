@@ -3,24 +3,36 @@ import React from "react";
 import Header from "components/Header/Header.component";
 import { useSelector, useDispatch } from "react-redux";
 import WelcomeLinks from "components/WelcomeLinks/WelcomeLinks";
+import { getTokenFromLocal,removeTokenFromLocalMeansLogout } from "@/ClientHelper/authHelper";
 //import { decrement, increment, reset } from "@/redux/features/counterSlice";
 //import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { useEffect } from "react";
-import { setCurrentUser } from "@/redux/user/userSlice";
+import { removeCurrentUser, setCurrentUser } from "@/redux/user/userSlice";
 function Home() {
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const storedUserDetails = JSON.parse(sessionStorage.getItem("userDetails"));
+   
+    const token = getTokenFromLocal();
+    console.log(token);
+    if(!token) {
+      removeTokenFromLocalMeansLogout();
+      dispatch(removeCurrentUser());
+      
+    }
+        // dispatch(setCurrentUser({}));
+        // sessionStorage.setItem("userDetails",null);
+     else{   const storedUserDetails = JSON.parse(sessionStorage.getItem("userDetails"));
     if (storedUserDetails) {
       dispatch(setCurrentUser(storedUserDetails));
+    }
     }
   }, [dispatch]);
   console.log(user);
   //const count = useAppSelector((state) => state.counterReducer.value);
   //const dispatch = useAppDispatch();
   return (
-    <div className="flex flex-col items-center border border-pink-600 px-2 relative">
+    <div className="flex flex-col items-center  px-2 relative">
       <WelcomeLinks />
     </div>
   );

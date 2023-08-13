@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import { CgProfile } from "react-icons/cg";
 import {
   BsThreeDots,
@@ -9,8 +9,17 @@ import {
 } from "react-icons/bs";
 import { FaRegComment } from "react-icons/fa";
 
-const Post = ({ username, content, image, user_profile }) => {
+const Post = ({ username ,college,content, image, user_profile }) => {
   console.log(username);
+
+
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpansion = () => {
+    setExpanded(!expanded);
+  };
+
+
   return (
     <>
       {/* must remove mx-auto from below div */}
@@ -25,7 +34,11 @@ const Post = ({ username, content, image, user_profile }) => {
                 className="rounded-full"
               />
             </div>
-            <p className="h-full w-full font-bold">{username}</p>
+            <div className="flex flex-col">
+            <span className="h-full w-full font-bold">{username}</span>
+            <span className="truncate	text-[10px]">{college}</span>
+            </div>
+           
           </div>
           <div className="flex gap-2 items-center">
             <button className="text-blue-400 font-base border border-2 border-blue-400 px-4 py-1 cursor-pointer hover:bg-blue-400 hover:text-white rounded-md">
@@ -36,14 +49,16 @@ const Post = ({ username, content, image, user_profile }) => {
             </div>
           </div>
         </header>
-
+      
         <main className="w-full h-auto my-4">
-          <p className="w-full h-full font-bold my-6">{content}</p>
-          <img
+          <div className= {`w-full h-full text-gray-600 my-6 cursor-pointer ${expanded ? "" : "line-clamp-2"}`}  onClick={()=>toggleExpansion()}>{content}</div>
+          {
+        image ? <img
             src={image}
             alt="postImage"
             className="w-full h-full object-cover"
-          />
+          />:null
+       }
         </main>
 
         <footer className="w-full h-[90px] rounded-md ">

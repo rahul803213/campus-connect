@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    user:''
+    user:'',
+    LoggedIn:false
 }
 
 export const user = createSlice({
@@ -10,9 +11,15 @@ export const user = createSlice({
     reducers:{
         setCurrentUser : (state,action) =>{
             state.user=action.payload
+            state.LoggedIn=true
+        },
+        removeCurrentUser: (state,action) => {
+            state.user = '',
+            state.LoggedIn = false
         }
+       
     }
 });
 
-export const {setCurrentUser} = user.actions;
+export const {setCurrentUser, removeCurrentUser} = user.actions;
 export default user.reducer;
