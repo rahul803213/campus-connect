@@ -10,11 +10,18 @@ const UserSchema = new mongoose.Schema(
   {
     username: {
       type: String,
-      required: true,
+     // required: true,
      // unique: true,
      // minlength: [6, "Must be at least 6 characters long"],
      // maxlength: [30, "Must be no more than 30 characters long"],
 
+    },
+    followers:{
+   type:[mongoose.Types.ObjectId],
+   ref:"User"
+    },
+    follower_count:{
+      type:Number
     },
     profileImage:{
       type:String
@@ -22,20 +29,20 @@ const UserSchema = new mongoose.Schema(
     contact_details: { 
         mobile_number: {
             type:String,
-            required:true,
-            unique:true
+            //required:true,
+           // unique:true
 
               
         },
       Email:{type: String,
-      required: true,
-      unique: true,
+     // required: true,
+     // unique: true,
      // validate: [isEmail, "Must be valid email address"]
       }
     },
     password: {
       type: String,
-      required: true,
+     // required: true,
      // minLength: [8, "Must be at least 8 characters long"],
     },
     biography: {
@@ -46,20 +53,20 @@ const UserSchema = new mongoose.Schema(
     academic_details:{
      branch:{
         type:String,
-        required:true
+       // required:true
      },
      college:{
         type:String,
-        required:true
+       // required:true
      },
      registration_number:{
         type:Number,
-        required:true,
-        unique:true
+      //  required:true,
+       // unique:true
      },
      session:{
         type:String,
-        required:true
+       // required:true
         
      },
      roll_number:{

@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 
 
 const Profile = () => {
+    const followerCount = useSelector(state => state.userReducer.user.user_follower_count)
     const user = useSelector(state => state.userReducer.user);
     const profile_uri=user.user_profile;
     console.log(profile_uri);
@@ -48,6 +49,7 @@ const Profile = () => {
                     <h4 className='text-center font-bold text-2xl'>
                         {user.user_name}
                     </h4>
+                    <h3>follower count is: {followerCount}</h3>
                     </div>
                 </div>
             </div>

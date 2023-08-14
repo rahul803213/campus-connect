@@ -39,8 +39,8 @@ const PostCreate = ( ) => {
     const { value, name } = event.target;
 
     setContent({ ...content, [name]: value });
-    // setContent({...content,poster_id:user})
-   // console.log(content);
+   //  setContent({...content,poster_id:user_id})
+   console.log(content);
   };
 
   const handleFileChange = (e) => {
@@ -56,7 +56,7 @@ const PostCreate = ( ) => {
     setLoading(true);
     e.preventDefault();
     setContent({ ...content, poster_id: user_id });
-   // console.log({ data: content });
+    console.log({ data: content });
 
     const response = await CreatePost(content);
 
@@ -75,10 +75,10 @@ const PostCreate = ( ) => {
     console.log({ "data after post create post": response.data });
     // Handle the post submission logic here
   //  console.log("Post content:", content);
-  //dispatch(addPost(response.data));
+dispatch(addPost(response.data));
   
     setContent({content: "",
-    file: ""});
+    file: "",poster_id:user_id});
     console.log("i am running")
     setSelectedFile(null)
     setTimeout(() => {

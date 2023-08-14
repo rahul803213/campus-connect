@@ -5,4 +5,5 @@ const router = express.Router();
 
 router.post("/create", singleUpload, postControllers.createPost);
 router.get("/", postControllers.fetchPost);
+router.post('/:postId/like',postControllers.likePostInServer)
 module.exports = router;

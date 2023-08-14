@@ -6,11 +6,15 @@ import { BASE_URL } from '@/ClientHelper/config';
 import { setCurrentUser } from "@/redux/user/userSlice";
 import { useSelector,useDispatch } from "react-redux";
 import { SignUpUser } from "@/network/userApi";
+import Alert from "../Alert/Alert";
+import { setTokenInLocal } from "@/ClientHelper/authHelper";
 const SignUpPage = () => {
   const url = `${BASE_URL}/user/register`;
   const dispatch = useDispatch();
   const Router = useRouter();
   const user = useSelector(state => state.userReducer);
+  const [message, setMessage] = useState(null);
+  const [messageType, setMessageType] = useState('');
   console.log({user_sign_up:user});
   const [formData, setFormData] = useState({
     username: "",
@@ -44,9 +48,19 @@ const SignUpPage = () => {
     e.preventDefault();
    
      
-      const user = await SignUpUser(formData);
-      console.log({"user after signup":user})
-      dispatch(setCurrentUser(user));
+      const data = await SignUpUser(formData);
+         if(data.success){
+          setMessageType('success');
+          setMessage(data.message);
+         }
+         else{
+          setMessageType('error');
+          setMessage(data.message);
+         }
+      console.log({"user after signup":data.user})
+      dispatch(setCurrentUser(data.user.user_data));
+      setTokenInLocal(data.user.user_data.user_token);
+      sessionStorage.setItem('userDetails' ,JSON.stringify(data.user.user_data));
       Router.push('/home');
     // save formdata in backend and navigate to home page
    // console.log("submit button clicked", formData);
@@ -160,6 +174,7 @@ const SignUpPage = () => {
                 <button className="border py-3 px-8 rounded-md font-serif text-sm md:text-md font-bold cursor-pointer hover:bg-blue-900 hover:text-slate-200 border-2 border-blue-900 hover:border-slate-100">
                   signup
                 </button>
+                {message && <Alert type={messageType} message={message} />}
               </div>
             </form>
           </div>
@@ -185,6 +200,7 @@ function FormField(props) {
           onChange={props.handleChange}
           className="w-full text-slate-400 focus:text-slate-600 font-base p-2 outline-none border-b-2 border-slate-300 focus:border-slate-900 rounded-md transition-all bg-slate-200"
         />
+          
       </div>
     </>
   );

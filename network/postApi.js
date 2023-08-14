@@ -1,4 +1,6 @@
 import { BASE_URL } from '@/ClientHelper/config';
+
+
 export const  fetchPostData = async () => {
     try {
       //  console.log({'env is working':process.env.NEXT_PUBLIC_BACKEND})
@@ -38,3 +40,25 @@ export const  fetchPostData = async () => {
       return { success: false, message: 'An error occurred while performing the action.' };
       }
     }
+
+ 
+    export const LikePost = async(post_id,user_id) => {
+        try{
+              const response = await fetch(`${BASE_URL}/post/${post_id}/like`,{
+                method:'POST',
+                headers:{
+                  'Content-Type':'application/json'
+                },
+                body: JSON.stringify({user_id})
+              });
+              if(response.ok){
+                const data = await response.json();
+                return data;
+              }else{
+                throw new Error('API REQUESt FAILED')
+              }
+        }
+        catch(error){
+             throw error;
+        }
+    } 

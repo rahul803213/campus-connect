@@ -29,6 +29,8 @@ const register = async (req, res) => {
     session,
     registration_number,
   } = req.body;
+
+  
   var profile_uri = "";
   const file = req.file;
   console.log({"file":file});
@@ -38,6 +40,7 @@ const register = async (req, res) => {
   // const mycloud = await cloudinary.v2.uploader.upload(fileuri.content).catch(error => console.log(error));
   // console.log({ "public id": mycloud.public_id });
   ///console.log({ secure_url: mycloud.secure_url });
+  if(file){
   try {
     const uploadResult = await cloudinary.uploader.upload(fileuri.content);
     console.log("Upload result:", uploadResult);
@@ -46,7 +49,7 @@ const register = async (req, res) => {
   } catch (error) {
     console.error("Error uploading to Cloudinary:", error);
     // throw error; // Rethrow the error to propagate it to the calling code
-  }
+  }}
   //    console.log(res.json({ picture: req.file.path }));
   /* cloudinary.uploader.upload(profileImage.useTempFiles,
   { public_id: "olympic_flag" }, 
@@ -77,12 +80,12 @@ const register = async (req, res) => {
   //const email_response='';
   user
     .save()
-    .then(() =>
+    /* .then(() =>
       emailVerification.sendVerificationEmail(
         user.contact_details.Email,
         user.VerificationToken
       )
-    )
+    ) */
     .then(() => {
       const token = jwt.sign(payload(user), process.env.jwt_secret_key);
       return res.json({
@@ -175,8 +178,46 @@ const email_verifier = async (req, res) => {
     return res.status(400).json({ error: error });
   }
 };
+
+const follow = async (req,res) => {
+ try{ 
+  const {follower_id} = req.body;
+  const {celeb_id}=req.params;
+  const celeb = await User.findById(celeb_id);
+  if(celeb){
+    if(!celeb.followers.includes(follower_id)){
+      celeb.followers.push(follower_id);
+      celeb.follower_count=celeb.followers.length;
+    }
+    else{
+       celeb.followers.filter((id) => id !== follower_id);
+       celeb.follower_count = celeb.followers.length;
+    }
+    await celeb.save();
+    res.status(200).json({ message: 'You are following Now.' });
+  }
+  else {
+    res.status(404).json({ error: 'User not found' });
+  }
+
+}
+  catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+}
+
+const signUp = async (req,res) => {
+  const {name,registration_number} =req.body ;
+
+   
+
+
+}
+
 module.exports = {
   register,
   login,
   email_verifier,
+  follow,
+  signUp
 };

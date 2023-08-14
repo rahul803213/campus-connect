@@ -30,7 +30,13 @@ const createPost = async (req, res) => {
   });
   post
     .save()
-    .then((result) => res.json(result))
+    .then((result) => {
+      // Now that the post is saved, let's populate the 'poster' field before sending the response
+      return Post.populate(result, { path: 'poster' });
+    })
+    .then((populatedPost) => {
+      res.json(populatedPost);
+    })
     .catch((err) => console.log(err));
 };
 
@@ -39,7 +45,36 @@ const fetchPost = async (req, res) => {
   res.json(posts);
 };
 
+const likePostInServer = async (req,res) => {
+ try{
+  const {postId} =req.params;
+  const {user_id} =req.body;
+  const post = await Post.findById(postId);
+
+    if (post) {
+      if (!post.likedBy.includes(user_id)) {
+        post.likedBy.push(user_id);
+        post.likeCount = post.likedBy.length;
+      } else {
+        post.likedBy = post.likedBy.filter((id) => id !== user_id);
+        post.likeCount = post.likedBy.length;
+      }
+      post.isLiked = post.likedBy.includes(user_id);
+
+      await post.save();
+      res.status(200).json({ message: 'Like status updated successfully' });
+    } else {
+      res.status(404).json({ error: 'Post not found' });
+    }
+  }
+    catch (error) {
+      res.status(500).json({ error: 'Server error' });
+    }
+}
+
+
 module.exports = {
   createPost,
   fetchPost,
+  likePostInServer
 };

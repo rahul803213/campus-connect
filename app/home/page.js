@@ -66,11 +66,11 @@ function Home() {
      <> { 
       !(token) ? Router.push('/signin'):
      
-  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] w-full">
+  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] w-[80%]">
     <Sidebar />
     <div className="flex flex-col w-full sm:w-3/6   ">
       <PostCreate   />
-     <MemoizedPostParent />
+     <PostParent />
     </div>
 
     {/* <NewsHighlight name="Latest News"/> */}

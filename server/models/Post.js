@@ -21,9 +21,17 @@ const PostSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    isLiked: {
+      type: Boolean,
+      default: 0,
+    },
     commentCount: {
       type: Number,
       default: 0,
+    },
+    likedBy:{
+      type:[ mongoose.Types.ObjectId],
+      ref: "User",
     },
     edited: {
       type: Boolean,

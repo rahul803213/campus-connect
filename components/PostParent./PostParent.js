@@ -35,6 +35,11 @@ const posts = useSelector(state=> state.postReducer.posts);
             content={data.content}
             image={data.image}
             user_profile={data.poster.profileImage}
+            isLiked={data.isLiked}
+            likeCount={data.likeCount}
+            id={data._id}
+            likedBy={data.likedBy}
+            postowner={data.poster._id}
           />
           // console.log(data.poster.username)
         ))

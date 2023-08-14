@@ -35,7 +35,7 @@ export const SignUpUser = async (formData) => {
           }
         }
         // fd.append('image',profile_picture);
-      const res = await   fetch(url, {
+      const res = await   fetch(`${BASE_URL}/user/register`, {
           method: "POST",
           headers:{
             "Access-Control-Allow-Origin": BASE_URL,
@@ -43,10 +43,35 @@ export const SignUpUser = async (formData) => {
           body: fd,
         })
         
-        return await res.json();
+        const data=  await res.json();
+        console.log({"data before success alert":data});
+        return {success:true,message:'You are Successfully SignUp.',user:data}
           
      }
      catch(error){
-        console.log({"Error at userApi":error})
+       return {success:false,message:`Something Went Wrong ${error}`}
      }
+}
+
+
+export const followOtherUser = async(celeb_id,follower_id)=> {
+       try{
+              const response = await fetch(`${BASE_URL}/user/${celeb_id}/follow`,{
+                method:'POST',
+                headers:{
+                  'Content-Type':'application/json'
+                },
+                body:JSON.stringify({follower_id})
+              })
+              if(response.ok){
+                const data = await response.json();
+                return {success:true,message:'You are following Now',data:data}
+              }else{
+                console.log(response);
+                return {success:false,message:'Something Went Wrong'}
+              }
+       }
+       catch(error){
+        throw error
+       }
 }

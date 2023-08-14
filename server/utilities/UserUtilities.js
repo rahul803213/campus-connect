@@ -10,7 +10,8 @@ const UserModel = (user,token) =>{
         user_branch:user.academic_details.branch,
         user_roll_number:user.academic_details.roll_number,
         user_session:user.academic_details.session,
-        user_reg_num:user.academic_details.registration_number
+        user_reg_num:user.academic_details.registration_number,
+        user_follower_count:user.follower_count
     }
 }
 
