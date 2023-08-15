@@ -11,15 +11,17 @@ import { useEffect } from "react";
 import { removeCurrentUser, setCurrentUser } from "@/redux/user/userSlice";
 function Home() {
   const user = useSelector((state) => state.userReducer.user);
+  const Router = useRouter();
   const dispatch = useDispatch();
+  const {
+    isFallback,
+} = useRouter();
+
+if (isFallback) {
+    return <h1>Fallback</h1>;
+}
   useEffect(() => {
-    const {
-      isFallback,
-  } = useRouter();
-  
-  if (isFallback) {
-      return <h1>Fallback</h1>;
-  }
+    
     const token = getTokenFromLocal();
     console.log(token);
     if(!token) {
