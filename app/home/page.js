@@ -25,7 +25,7 @@ const areEqual = (prevProps, nextProps) => {
 
 const MemoizedPostParent = React.memo(PostParent, areEqual);
 
-function Home() {
+function Home(props) {
   const Router = useRouter();
   //const dispatch = useDispatch();
  // const user = useSelector(state=> state.userReducer.user);

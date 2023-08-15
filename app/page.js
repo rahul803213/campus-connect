@@ -2,6 +2,7 @@
 import React from "react";
 import Header from "components/Header/Header.component";
 import { useSelector, useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
 import WelcomeLinks from "components/WelcomeLinks/WelcomeLinks";
 import { getTokenFromLocal,removeTokenFromLocalMeansLogout } from "@/ClientHelper/authHelper";
 //import { decrement, increment, reset } from "@/redux/features/counterSlice";
@@ -12,7 +13,13 @@ function Home() {
   const user = useSelector((state) => state.userReducer.user);
   const dispatch = useDispatch();
   useEffect(() => {
-   
+    const {
+      isFallback,
+  } = useRouter();
+  
+  if (isFallback) {
+      return <h1>Fallback</h1>;
+  }
     const token = getTokenFromLocal();
     console.log(token);
     if(!token) {
