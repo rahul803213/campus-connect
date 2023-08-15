@@ -17,9 +17,7 @@ function Home() {
     isFallback,
 } = useRouter();
 
-if (isFallback) {
-    return <h1>Fallback</h1>;
-}
+
   useEffect(() => {
     
     const token = getTokenFromLocal();
@@ -40,6 +38,9 @@ if (isFallback) {
   console.log(user);
   //const count = useAppSelector((state) => state.counterReducer.value);
   //const dispatch = useAppDispatch();
+  if (isFallback) {
+    return <h1>Fallback</h1>;
+}
   return (
     <div className="flex flex-col items-center  px-2 relative">
       <WelcomeLinks />
