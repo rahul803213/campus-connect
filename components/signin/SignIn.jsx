@@ -7,6 +7,7 @@ import { SignInUser } from "@/network/userApi";
 import { setCurrentUser } from "@/redux/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setTokenInLocal } from "@/ClientHelper/authHelper";
+import Alert from "../Alert/Alert";
 
 
 function Signin() {
@@ -22,7 +23,8 @@ function Signin() {
 
     setFormData({ ...formData, [name]: value });
   };
-
+ const [message,setMessage] = useState(null);
+ const [messageType,setMessageType] =useState('');
   const redux_redux_user = useSelector((state) => state.userReducer.user);
   console.log({ "redux-user": redux_redux_user });
 
@@ -34,14 +36,27 @@ function Signin() {
       return res.json({ error: "one of two or may both is empty" });
     try {
       
-      const result = await SignInUser(formData);
-      console.log({"After login result":result})
-       setTokenInLocal(result.user_token);//set Token for user
-       dispatch(setCurrentUser(result));//redux takes userReducer.user
-       sessionStorage.setItem('userDetails' ,JSON.stringify(result));
+      const data = await SignInUser(formData);
 
-   //   console.log( formData );
+      const result= data.data;
+      console.log(result);
+      if(data.success){
+       
+        console.log({"After login result":result})
+        setTokenInLocal(data.user_token);//set Token for user
+        dispatch(setCurrentUser(result));//redux takes userReducer.user
+        sessionStorage.setItem('userDetails' ,JSON.stringify(result));
+ 
+    //   console.log( formData );
       Router.push("/home");
+       setMessageType('success');
+       setMessage(data.message);
+      }
+      else{
+        setMessageType('error');
+        setMessage(data.message);
+      }
+     
     } catch (error) {
       console.error("error fetching data at SignIn Component", error);
     }
@@ -125,6 +140,7 @@ function Signin() {
           >
             Register{" "}
           </Link>
+          {message && <Alert type={messageType} message={message}  />}
         </p>
       </div>
     </div>

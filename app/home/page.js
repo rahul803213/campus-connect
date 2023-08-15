@@ -60,6 +60,9 @@ function Home() {
 
   
 
+  if (Router.isFallback) {
+    <h1>Data is loading</h1>;
+  }
 
 
   return ( 

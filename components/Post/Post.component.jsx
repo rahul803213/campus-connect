@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { CgProfile } from "react-icons/cg";
-import { RWebShare } from "react-web-share";
+
 import Alert from "../Alert/Alert";
+import Comment from "../Comment/Comment";
+import { useEffect } from "react";
+import CommentSubmissionForm from "../CommentSubmissionForm.js/CommentSubmissionForm";
 import {
   BsThreeDots,
   BsHeart,
@@ -9,25 +11,17 @@ import {
   BsSave,
   BsHeartFill,
 } from "react-icons/bs";
-import {
-  FacebookShareButton,
-  FacebookIcon,
-  PinterestShareButton,
-  PinterestIcon,
-  RedditShareButton,
-  RedditIcon,
-  WhatsappShareButton,
-  WhatsappIcon,
-  LinkedinShareButton,
-  LinkedinIcon,
-} from 'next-share';
+
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { FaRegComment } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchComments } from "@/redux/comment/commentAction";
 import { likePost } from "@/redux/post/postSlice";
 import { LikePost } from "@/network/postApi";
 import { followOtherUser } from "@/network/userApi";
+import { BASE_URL } from "@/ClientHelper/config";
+import { handleCommentSubmit } from "@/network/commentApi";
 
 const Post = ({ username, college, content, image, user_profile,id,isLiked,likeCount,likedBy,postowner }) => {
   console.log(username);
@@ -37,9 +31,58 @@ const Post = ({ username, college, content, image, user_profile,id,isLiked,likeC
   const [expanded, setExpanded] = useState(false);
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState('');
+
+
+  useEffect(() => {
+    dispatch(fetchComments(id));
+  }, [dispatch, id]);
+
+
+
   const toggleExpansion = () => {
     setExpanded(!expanded);
   };
+
+
+
+
+
+  const  handleCommentSubmit = async (comment) => {
+    try {
+      const response = await fetch(`${BASE_URL}/comment/create`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          postId: id, // Assuming you have a `post` object in your component
+          content: comment,
+          userId: user_id, // Assuming you have the user's name available
+        }),
+      });
+  
+      if (response.ok) {
+        const newCommentData = await response.json();
+        console.log({"newcomment created":newCommentData})
+        // Handle the successful response, maybe update the state
+      } else {
+        console.error('Error submitting comment:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
+  };
+
+
+
+
+
+  
+
+
+
+
+
 
    const handleLikeClick = async (post_id) => {
             try{
@@ -151,6 +194,10 @@ const handleFollowButton = async(celeb_id) => {
             {message && <Alert type={messageType} message={message} />}
           </div>
         </footer>
+        <CommentSubmissionForm
+          postId={id}
+          onCommentSubmit={handleCommentSubmit}
+        />
       </div>
     </>
   );

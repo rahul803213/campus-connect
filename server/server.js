@@ -11,7 +11,9 @@ const users = require("./routes/users");
 const posts = require("./routes/posts");
 const colleges = require("./routes/colleges");
 const details = require("./routes/SecretDetails");
+const comments = require("./routes/comments");
 const cloudinary = require("cloudinary");
+
 //database
 const app = express();
 //port = 4000;
@@ -61,7 +63,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", users);
 app.use("/college", colleges);
 app.use("/detail", details);
-app.use("/post",posts)
+app.use("/post",posts);
+app.use("/comment",comments)
 app.get("/", (req, res) => {
   res.json({ name: "rahul" });
 });

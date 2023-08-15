@@ -7,8 +7,11 @@ import Header from '@/components/Header/Header.component'
 import Profile from '@/components/Profile/profile.component'
 
 import { setCurrentUser } from '@/redux/user/userSlice'
-function Page() {
+function Profile() {
   const Router = useRouter();
+  if (Router.isFallback) {
+    <h1>Data is loading</h1>;
+  }
   const isLoggedIn = useSelector(state => state.userReducer.LoggedIn)
  
   const dispatch = useDispatch();
@@ -34,4 +37,4 @@ function Page() {
   )
 }
 
-export default Page
+export default Profile

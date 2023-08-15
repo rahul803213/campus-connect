@@ -16,7 +16,13 @@ export const SignInUser = async (formData) => {
               body: JSON.stringify(formData),
             }
           );
-          return response.json();
+          const data= await response.json();
+          if(response.ok){
+            return {success:'true',message:'You are Signed In Now',data:data}
+          }
+          else{
+            return {success:'false',message:'Something Went Wrong'}
+          }
     }
     catch(error){
         console.log({"Error at Sign In Function":error})
