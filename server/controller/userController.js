@@ -260,20 +260,25 @@ const signUpReg = async (req, res) => {
    if(user==null) {
   return  res.status(404).json({error:"You are not authorized till now.Contact Support!"})
    }
-
+ /*  if(User.findOne({contact_details:{Email:user.reg_email}})){
+    return  res.status(404).json({error:"An Email is Already Sent"})
+  } */
      console.log(user);
     const email = user.reg_email;
     const college = user.college_id;
     const normalizedEmail = email.toLowerCase();
 
     const student = new User({
+      username:user.name,
+      password:'',
+      profileImage:`https://robohash.org/${user.name}`,
       contact_details: {
         Email: normalizedEmail,
       },
       isVerified: false,
       VerificationToken: emailVerification.generateVerificationToken(),
       academic_details: {
-        college: college,
+        college_id: college,
         registration_number: registration_number.registrationNumber,
       },
     });
@@ -301,6 +306,66 @@ const signUpReg = async (req, res) => {
   }
 };
 
+const  loginReg = async(req,res) => {
+  try {
+    const { reg_no, password } = req.body;
+
+    if (!(reg_no && password)) {
+      throw new Error("All input required");
+    }
+
+    //const normalizedEmail = email.toLowerCase();
+
+    const user = await User.findOne({
+      "academic_details.registration_number": reg_no,
+    });
+
+    if (!user) {
+   return   res.status(404).json({error:'User Not Exist'})
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) {
+    return  res.status(404).json({error:'Password Is Invalid'})
+    }
+
+    //   const token = jwt.sign(buildToken(user), process.env.TOKEN_KEY);
+
+    const token = jwt.sign(payload(user), process.env.jwt_secret_key, {
+      expiresIn: "365d", // expires in 365 days
+    });
+
+    return res.json(UserUtilities.UserModel(user, token));
+  } catch (err) {
+    return res.status(400).json({ error: err.message });
+  }
+}
+
+
+const updatePassword = async(req,res) => {
+   try{
+            const {password,token} = req.body;
+            const data = await User.findOne({VerificationToken:token});
+            if(!data){
+              return  res.status(404).json({error:"Invalid Token!"})
+            }
+            const hashedPassword = await bcrypt.hash(password, 10);
+            /* if(data.isVerified){
+              return res.status(404).json({error:'You are already verified'})
+            } */
+            console.log(data);
+            const updateData = await User.updateOne({VerificationToken:token},{password:hashedPassword}, { new: true });
+            return res.json(updateData)
+
+
+   }
+   catch(error){
+    return res.json({error:error});
+   }
+       
+
+}
 
 
 
@@ -309,5 +374,7 @@ module.exports = {
   login,
   email_verifier,
   follow,
-  signUpReg
+  signUpReg,
+  loginReg,
+  updatePassword
 };

@@ -18,15 +18,45 @@ export const SignInUser = async (formData) => {
           );
           const data= await response.json();
           if(response.ok){
-            return {success:'true',message:'You are Signed In Now',data:data}
+            return {success:true,message:'You are Signed In Now',data:data}
           }
           else{
-            return {success:'false',message:'Something Went Wrong'}
+            return {success:false,message:'Something Went Wrong'}
           }
     }
     catch(error){
         console.log({"Error at Sign In Function":error})
     }
+
+}
+
+export const SignInUserWithRegNo = async (formData) => {
+  const url = `${BASE_URL}/user/reg-login`
+  try{
+      const response = await fetch(
+          url,
+  
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": BASE_URL
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+        const data= await response.json();
+        console.log({"data after sendemail":data});
+        if(response.ok){
+          return {success:true,message:'You are Signed In Now',data:data}
+        }
+        else{
+          return {success:false,message:data.error}
+        }
+  }
+  catch(error){
+      return {success:false,message:error}
+  }
 
 }
 
@@ -71,7 +101,7 @@ export const followOtherUser = async(celeb_id,follower_id)=> {
               })
               if(response.ok){
                 const data = await response.json();
-                return {success:true,message:'You are following Now',data:data}
+                return {success:true,message:'Updated Successfully',data:data}
               }else{
                 console.log(response);
                 return {success:false,message:'Something Went Wrong'}
@@ -94,10 +124,31 @@ export const SendVerificationMailApi = async(registration_number)=>{
   const data = await response.json();
   console.log({data:data})
   if(response.ok){
-    return {success:true,data:data,message:"Email Verification Sent"}
+    return {success:true,data:data,message:`Email Verification Sent ${data.contact_details.Email}`}
   }
   else{
     return {success:false,message:data.error};
   }
   
+}
+
+export const updatePasswordApi = async (password,token) => {
+  try{
+         const response = await fetch(`${BASE_URL}/user/update-password`,{
+          method:'POST',
+          headers:{
+            'Content-Type':'application/json'
+          },
+          body: JSON.stringify({password:password,token:token})
+         })
+         const data = await response.json();
+         if(response.ok){
+          return {success:true,data:data,message:"Successfully Updated Password"}
+         }
+         else{
+          return {success:false,message:data.error}
+         }
+  }catch(error){
+       return {success:false,message:data.error}
+  }
 }

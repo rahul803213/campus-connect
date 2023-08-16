@@ -125,6 +125,7 @@ const Post = ({ username, college, content, image, user_profile,id,isLiked,likeC
             }
 }  
 
+ const [follow,setFollow]= useState('follow');
 
 const handleFollowButton = async(celeb_id) => {
          try{
@@ -132,6 +133,7 @@ const handleFollowButton = async(celeb_id) => {
                     if (response.success) {
                       setMessage(response.message);
                       setMessageType('success');
+                  follow=='follow' ?     setFollow('unfollow') : setFollow('follow')
                      // setPostData(response.data); // Set the returned data
                     } else {
                       setMessage(response.message);
@@ -168,7 +170,7 @@ const handleFollowButton = async(celeb_id) => {
             <button className="text-blue-400 font-base border border-2 border-blue-400 px-4 py-1 cursor-pointer hover:bg-blue-400 hover:text-white rounded-md"
              onClick={()=> handleFollowButton(postowner)}
             >
-              Follow
+             {follow}
             </button>
             <div className="cursor-pointer">
               <BsThreeDots style={{ fontSize: "1.1rem" }} />
@@ -239,7 +241,7 @@ const handleFollowButton = async(celeb_id) => {
         {loadMoreCount < comments?.length && (
         <button onClick={handleLoadMoreComments}>See More</button>
       )}
-      {loadMoreCount == comments?.length && (
+      {loadMoreCount === comments?.length && (
         <button onClick={handleLessComments}>See Less</button>
       )}
       </div>

@@ -1,181 +1,151 @@
-"use client"
+"use client";
 import React, { useState } from "react";
+import { BASE_URL } from "@/ClientHelper/config";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { BiSolidShow, BiSolidHide } from "react-icons/bi";
-import { BsFacebook, BsGoogle } from "react-icons/bs";
-import { BASE_URL } from '@/ClientHelper/config';
+import { SignInUser } from "@/network/userApi";
+import { setCurrentUser } from "@/redux/user/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { setTokenInLocal } from "@/ClientHelper/authHelper";
+import Alert from "../Alert/Alert";
+import { SignInUserWithRegNo } from "@/network/userApi";
 
-// import CustomButton from "../CustomButton/CustomButton.component";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { headers } from "next/dist/client/components/headers";
-import { responsiveFontSizes } from "@mui/material";
-//import demoPost from '../assets/demoPost.jpg'
 
-const SignInPage = () => {
+function Login() {
+  const dispatch = useDispatch();
   const Router = useRouter();
-  const [form, setForm] = useState({
-    email: "example123@gmail.com",
-    password: "0123456789",
+  const [formData, setFormData] = useState({
+    reg_no: "19105108033",
+    password: "111111",
   });
-  const [data,setData] = useState('');
-  const [visibility, setVisibility] = useState(false);
-  const handleClick = value => () => Router.push(value);
+  //handle change function
+  const handlechange = (event) => {
+    const { value, name } = event.target;
 
-  //handle change
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
-  //handle submit
-  const handleSubmit =  async(e) =>{
-    e.preventDefault();
-    
-    const url = `${BASE_URL}/user/login`;
-    if(form.email=="" || form.password=="") return res.json({error:"one of two or may both is empty"});
-    try{
-        const response= await  fetch(url,
-   
-            {
-                    method:"POST",
-                    headers:{
-                        'Content-Type':'application/json'
-                    },
-                    body:JSON.stringify(form)
-                }
-                )
-            const result = await response.json();
-            setData(result);
-                  
-        
-            console.log({user_details:result});
-            Router.push('/home');
+ const [message,setMessage] = useState(null);
+ const [messageType,setMessageType] =useState('');
+  const redux_redux_user = useSelector((state) => state.userReducer.user);
+  console.log({ "redux-user": redux_redux_user });
+
+//handle submit functions
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+   // const url = `${BASE_URL}/user/login`
+    if (formData.reg_no == "" || formData.password == "")
+      return res.json({ error: "one of two or may both is empty" });
+    try {
+      
+      const data = await SignInUserWithRegNo(formData);
+
+      const result= data.data;
+      console.log(result);
+      if(data.success){
+       
+        console.log({"After login result":result})
+        setTokenInLocal(data.user_token);//set Token for user
+        dispatch(setCurrentUser(result));//redux takes userReducer.user
+        sessionStorage.setItem('userDetails' ,JSON.stringify(result));
+ 
+    //   console.log( formData );
+      Router.push("/home");
+       setMessageType('success');
+       setMessage(data.message);
+      }
+      else{
+        setMessageType('error');
+        setMessage(data.message);
+      }
+     
+    } catch (error) {
+      console.error("error fetching data at SignIn Component", error);
     }
-    catch(error){
-        console.error('error fetching data',error)
-    }
-   
-    
-  }
-
-
-
-
+    // console.log(formData);
+  };
 
   return (
-    <>
-      <div className="w-full rounded-md bg-white text-slate-900 flex flex-col items-center p-4 justify-between gap-2 h-full">
-        <div className="flex flex-col flex-wrap w-full items-center p-3 ">
-          <h2 className="text-2xl md:text-5xl font-serif font-semibold capitalize mt-4">
-            welcome here!
-          </h2>
-          <h5 className="text-sm md:text-md text-slate-500 font-base mb-4 capitalize">
-            Join our college based community
-          </h5>
+    <div className="flex flex-1  flex-col justify-center px-4 lg:px-8  h-full w-full md:w-1/2 gap-8 items-center py-2 md:py-0">
+      <div className=" w-full sm:max-w-sm  p-2">
+        {/* <img className="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company" /> */}
+        <h2 className=" text-center text-xl lg:text-4xl font-extrabold tracking-tight text-gray-700 font-serif capitalize ">
+          Sign in to your account
+        </h2>
+      </div>
 
-          {/* all email-Box of user*/}
-       {/*    <div className=" p-3 flex flex-wrap flex-col w-full md:w-4/5 gap-2">
-            <h2 className="text-sm md:text-md text-slate-500 ">
-              Recents logins
-            </h2>
-            <div className=" p-3 flex flex-wrap justify-center gap-3">
-              <AccountCircleIcon className="text-[93px]" />
-              <AccountCircleIcon className="text-[93px]" />
-            </div>
-          </div>*/}
-        </div> 
-
-        {/* signIn information block */}
-        <div  className="flex flex-col w-full bg-slate-200 rounded-lg px-2 py-4">
-          {/* user detail */}
-          <form onSubmit={handleSubmit} className=" flex flex-wrap w-full justify-center gap-4">
-            <div className="w-[250px] h-[40px] bg-white text-slate-600 rounded-md">
+      <div className="w-full sm:max-w-sm  p-2">
+        <form className="flex flex-col space-y-6 py-2" onSubmit={handleSubmit}>
+          <div>
+            <label className="block text-sm font-medium leading-6 text-gray-900 ">
+             Registration Number
+            </label>
+            <div className="mt-2">
               <input
-                type="email"
-                name="email"
-                value={form.email}
-                placeholder={form.email}
-                onChange={handleChange}
-                className="w-full text-lg font-mono font-base  rounded-md h-full px-3 outline-none border-2 focus:border-blue-400"
+                onChange={handlechange}
+               // id="email"
+                name="reg_no"
+                type="text"
+                value={formData.reg_no}
+                autoComplete="email"
+                required
+                className="p-2 block w-full rounded-md border-0  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
               />
             </div>
-            <div className="w-[250px] h-[40px] bg-white text-slate-600 rounded-md flex ">
-              <input
-                type={visibility ? "text" : "password"}
-                name="password"
-                value={form.password}
-                placeholder={form.password}
-                onChange={handleChange}
-                className="w-full text-lg font-mono font-base h-full px-3 outline-none rounded-l-md border-2 focus:border-blue-400"
-              />
-              <div
-                className="w-[40xp] h-full border rounded-r-md flex items-center justify-center text-2xl p-2"
-                onClick={() => setVisibility(!visibility)}
-              >
-                {visibility ? <BiSolidHide /> : <BiSolidShow />}
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label className="block text-sm font-medium leading-6 text-gray-900 ">
+                Password
+              </label>
+              <div className="text-sm">
+                <a
+                  href="#"
+                  className="font-normal text-indigo-600 hover:text-indigo-800 font-serif"
+                >
+                  Forgot password?
+                </a>
               </div>
             </div>
-          
-
-            <a href="/" className=" text-base mr-[200px] py-2 text-blue-600">
-              forget password ...{" "}
-            </a>
-
-            <div className="flex flex-col w-full mt-2 items-center gap-2 p-2">
-              <Button nf  type="submit">Sign In</Button>
+            <div className="mt-2">
+              <input
+                id="password"
+                onChange={handlechange}
+                name="password"
+                value={formData.password}
+                type="password"
+                autoComplete="current-password"
+                required
+                className="p-2 block w-full rounded-md border-0  text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
             </div>
-          </form>
-          <div className=" w-full relative mt-2 p-4">
-            <div className="h-[1px] w-full bg-slate-500" />
-            <p className="absolute bg-slate-200 z-10 text-xs sm:text-sm left-[50%] top-[50%] transition-all -translate-x-1/2 -translate-y-1/2 px-2 sm:px-4 text-slate-900 ">
-              {" "}
-              Or continue with{" "}
-            </p>
           </div>
 
-          <div className="flex flex-wrap p-4 items-center justify-center gap-4 text-xl ">
-            <BsFacebook className="cursor-pointer transition-all hover:ring-indigo-600 hover:ring-2 rounded-full" />
-            <BsGoogle className="cursor-pointer transition-all hover:ring-indigo-600 hover:ring-2 rounded-full" />
+          <div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800"
+            >
+              {/* focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 */}
+              Sign in
+            </button>
           </div>
+        </form>
 
-          <div className="flex flex-col w-full mt-2 items-center gap-2 p-2">
-            <Button nf onClick={handleClick('signup')}>
-              Register
-            </Button>
-          </div>
-        </div>
+        <p className="mt-10 text-center text-sm text-gray-500">
+          Not a member?&nbsp;
+          <Link
+            prefetch
+            href="/signup"  //register
+            className="cursor-pointer font-normal leading-6 text-indigo-600 hover:text-indigo-800 font-serif"
+          >
+            Register{" "}
+          </Link>
+          {message && <Alert type={messageType} message={message}  />}
+        </p>
       </div>
-    </>
-  );
-};
-
-export default SignInPage;
-
-const Item3 = ({ profileUrl, email }) => {
-  return (
-    <div className="w-[100px] h-[100px] bg-slate-100 text-slate-600 rounded-lg flex flex-col items-center justify-between p-2">
-      <div className="w-[50px] h-[50px] rounded-full flex justify-center items-center">
-        <img
-          src={profileUrl}
-          alt="profile"
-          className="w-full h-full object-cover rounded-full"
-        />
-      </div>
-      <p className="text-xs lg:text-md w-full truncate">{email}</p>
     </div>
   );
-};
+}
 
-const Button = ({ children }) => {
-  return (
-    <div>
-      <button
-        className='capitalize border p-2 rounded-md w-[250px] lg:w-[350px] text-md font-base font-serif text-slate-600 hover:bg-slate-600 hover:text-white border-slate-600'
-        
-      >
-        {children}
-      </button>
-    </div>
-  );
-};
+export default Login;

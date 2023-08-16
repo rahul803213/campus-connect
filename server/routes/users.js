@@ -10,5 +10,7 @@ router.post("/login", userControllers.login);
 router.get("/verify", userControllers.email_verifier);
 router.post("/:celeb_id/follow",userControllers.follow)
 router.post('/sendmail',userControllers.signUpReg);
+router.post('/update-password',userControllers.updatePassword);
+router.post('/reg-login',userControllers.loginReg);
 
 module.exports = router;

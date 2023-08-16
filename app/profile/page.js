@@ -30,7 +30,7 @@ function P() {
     <Profile />
   </div> 
   :
-  Router.push('/signin')
+  Router.push('/reglogin') //earlier signin
       }
     </>
    

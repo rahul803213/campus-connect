@@ -9,6 +9,7 @@ function PostParent() {
 const dispatch = useDispatch();
 const [loading,setLoading] = useState(false);
 const posts = useSelector(state=> state.postReducer.posts);
+console.log({"Posts ":posts});
      useEffect(()=> {
       setLoading(true);
       const fetchData = async () => {

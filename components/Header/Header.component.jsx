@@ -56,7 +56,7 @@ function Header() {
           </button> : <Link
             className="text-blue-700 font-semibold rounded-lg border border-2
             border-blue-700 px-4 py-2 transition-all hover:bg-blue-700 hover:text-white hover:border-blue-700"
-            href={"/signin"}
+            href={"/reglogin"}//earlier signin
           >
         Sign In 
           </Link>}

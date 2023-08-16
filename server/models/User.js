@@ -24,7 +24,8 @@ const UserSchema = new mongoose.Schema(
       type:Number
     },
     profileImage:{
-      type:String
+      type:String,
+      //default:''
     },
     contact_details: { 
         mobile_number: {
@@ -58,6 +59,10 @@ const UserSchema = new mongoose.Schema(
      college:{
         type:String,
        // ref:"College"
+     },
+     college_id:{
+      type:mongoose.Types.ObjectId,
+      ref:'College'
      },
      registration_number:{
         type:Number,

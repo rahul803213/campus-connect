@@ -36,12 +36,15 @@ function SendMail() {
   };
 
   return (
-    <div className="flex flex-1 flex-col justify-center px-4 lg:px-8 h-full w-full md:w-1/2 gap-8 items-center py-2 md:py-0">
+    <div className="flex flex-col justify-center items-center">
       {/* Rest of your JSX code */}
+      <h2 className=" text-center text-center text-xl lg:text-4xl font-extrabold tracking-tight text-gray-700 font-serif capitalize ">
+         Enter Your Registration Number
+        </h2>
       <form className="flex flex-col space-y-6 py-2" onSubmit={handleSubmit}>
         {/* ... */}
         <div>
-          <label className="block text-sm font-medium leading-6 text-gray-900">
+          <label className="block text-lg font-medium leading-6 text-gray-900">
             Registration Number
           </label>
           <div className="mt-2">
@@ -52,7 +55,7 @@ function SendMail() {
               autoComplete="off"
              // value={registrationNumber}
               onChange={handleChange}
-              className="p-2 block w-full rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              className="p-4 block w-full font-bold rounded-md border-0 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
         </div>

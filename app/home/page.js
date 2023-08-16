@@ -67,7 +67,7 @@ function Home() {
 
   return ( 
      <> { 
-      !(token) ? Router.push('/signin'):
+      !(token) ? Router.push('/reglogin'): //earlier singin
      
   <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] w-[80%]">
     <Sidebar />

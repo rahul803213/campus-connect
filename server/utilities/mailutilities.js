@@ -5,10 +5,10 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 let url = ''
 if(process.env.NODE_ENV=='production'){
-   url="https://collegebookbce.onrender.com"
+   url=""
 }
 else{
-   url="http://localhost:4000"
+   url="http://localhost:3000"
 }
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
@@ -29,7 +29,7 @@ const generateVerificationToken = () => {
 
 // Send the verification email
 const sendVerificationEmail = (email, verificationToken) => {
-  const verificationLink = `${url}/user/verify?token=${verificationToken}`;
+  const verificationLink = `${url}/reset-password/${verificationToken}`;
   const mailOptions = {
     from: process.env.my_email,
     to: email,

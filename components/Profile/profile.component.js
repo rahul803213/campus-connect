@@ -55,7 +55,7 @@ const Profile = () => {
             </div>
 
             {/* personal details */}
-            <div className='flex flex-col flex-1 p-2 justify-center w-full sm:w-1/2   items-end gap-4 bg-slate-100 '>
+            <div className='flex flex-col flex-1 p-2 justify-center w-full    items-end gap-4 bg-slate-100 '>
                 <Details details={'Academic Details'}>
                     <div className='flex flex-col sm:flex-wrap sm:flex-row sm:justify-between sm:gap-x-4  w-full px-4 py-2'>
                         <Item2 name='college' value={user.user_college}/>
@@ -112,7 +112,7 @@ const Item2 = ({name, value}) => {
 const Details = ({children,details}) => {
 return(
 <div className='flex flex-col w-full font-serif'>
-    <h2 className='text-base sm:text-lg font-normal text-slate-600 p-2 '>{details}</h2>
+    <h2 className='text-base sm:text-lg font-normal text-black text-uppercase p-2 '>{details}</h2>
     {children}
 </div>
 )
