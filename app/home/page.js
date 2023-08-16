@@ -25,7 +25,7 @@ const areEqual = (prevProps, nextProps) => {
 
 const MemoizedPostParent = React.memo(PostParent, areEqual);
 
-function Home() {
+function Home2() {
   const Router = useRouter();
   //const dispatch = useDispatch();
  // const user = useSelector(state=> state.userReducer.user);
@@ -87,4 +87,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Home2;
