@@ -1,7 +1,6 @@
 import React from 'react'
-import { useEffect } from 'react/cjs/react.development';
 
-function Z() {
+function Zi() {
   return (
     <div>
       nothing.
@@ -9,4 +8,4 @@ function Z() {
   )
 }
 
-export default Z
+export default Zi
