@@ -10,7 +10,7 @@ export const getStaticPaths = async () => {
       paths: [
         {
           params: {
-            token: 'next.js',
+            token: '123',
           },
         }, // See the "paths" section below
       ],
@@ -23,8 +23,9 @@ export const getStaticPaths = async () => {
 
 
 function PasswordResetPage() {
-    const Router= useRouter();
-  const { token } = useParams();
+  const Router = useRouter();
+   
+  const { token } = Router.query;
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
