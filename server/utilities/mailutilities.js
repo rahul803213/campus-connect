@@ -3,12 +3,12 @@ require('dotenv').config();
 
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
-
+let url = ''
 if(process.env.NODE_ENV=='production'){
-  const url="https://collegebookbce.onrender.com"
+   url="https://collegebookbce.onrender.com"
 }
 else{
-  const url="http://localhost:4000"
+   url="http://localhost:4000"
 }
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({

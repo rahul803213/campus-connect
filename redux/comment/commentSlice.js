@@ -2,16 +2,34 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchComments } from './commentAction';
 const initialState = {
-  comments: [], // Initial comments array
+  comments: {}, // Initial comments array
   loading: false,
   error: null,
+  loadMoreCounts: {},
 };
 
 const commentSlice = createSlice({
-  name: 'comments',
+  name: 'comment',
   initialState,
   reducers: {
     // Add any additional reducers if needed
+    addComment: (state, action) => {
+      state.comments=(action.payload);
+    },
+    addCommentEveryTime: (state, action) => {
+      const { postId, comment } = action.payload;
+      state.comments[postId].unshift(comment);
+    },
+    setComments: (state, action) => {
+      const { postId, comments } = action.payload;
+      state.comments[postId] = comments;
+      state.loadMoreCounts[postId] = 2; // Initialize load more count for this post
+    },
+    loadMoreComments: (state, action) => {
+      const { postId } = action.payload;
+      state.loadMoreCounts[postId] += 2;
+    },
+    
   },
   extraReducers: (builder) => {
     builder
@@ -29,5 +47,12 @@ const commentSlice = createSlice({
       });
   },
 });
+
+export const {
+  addComment,
+  addCommentEveryTime,
+  setComments,
+  loadMoreComments
+} = commentSlice.actions;
 
 export default commentSlice.reducer;

@@ -12,6 +12,7 @@ const posts = require("./routes/posts");
 const colleges = require("./routes/colleges");
 const details = require("./routes/SecretDetails");
 const comments = require("./routes/comments");
+const universities = require("./routes/universities")
 const cloudinary = require("cloudinary");
 
 //database
@@ -62,6 +63,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/user", users);
 app.use("/college", colleges);
+app.use('/university',universities)
 app.use("/detail", details);
 app.use("/post",posts);
 app.use("/comment",comments)

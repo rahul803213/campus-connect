@@ -57,7 +57,7 @@ const UserSchema = new mongoose.Schema(
      },
      college:{
         type:String,
-       // required:true
+       // ref:"College"
      },
      registration_number:{
         type:Number,
@@ -71,7 +71,7 @@ const UserSchema = new mongoose.Schema(
      },
      roll_number:{
         type:Number,
-        required:true
+       // required:true
      },
      profile_picture:{
         type:String,
@@ -79,7 +79,7 @@ const UserSchema = new mongoose.Schema(
      },
      branch:{
         type:String,
-        required:true
+       // required:true
      }
     },
     isVerified: {

@@ -11,7 +11,12 @@ const CollegeSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
        
+    },
+    university_id:{
+        type:mongoose.Types.ObjectId,
+        ref:'University'
     }
+   
 })
 
 module.exports = mongoose.model("College",CollegeSchema);

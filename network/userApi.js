@@ -81,3 +81,23 @@ export const followOtherUser = async(celeb_id,follower_id)=> {
         throw error
        }
 }
+
+
+export const SendVerificationMailApi = async(registration_number)=>{
+  const response = await fetch(`${BASE_URL}/user/sendmail`,{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify({registration_number})
+  })
+  const data = await response.json();
+  console.log({data:data})
+  if(response.ok){
+    return {success:true,data:data,message:"Email Verification Sent"}
+  }
+  else{
+    return {success:false,message:data.error};
+  }
+  
+}

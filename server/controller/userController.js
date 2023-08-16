@@ -6,6 +6,7 @@ const getDataUri = require("../utilities/dataUri");
 const emailVerification = require("../utilities/mailutilities");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
+const SecretDetail = require('../models/SecretDetail')
 
 //const multer = require('multer')
 
@@ -15,7 +16,7 @@ require("dotenv").config();
 //const upload = multer({ dest: 'uploads/' });
 
 //register function
-const register = async (req, res) => {
+const register = async (req, res,userData) => {
   const {
     username,
     email,
@@ -56,7 +57,7 @@ const register = async (req, res) => {
   function(error, result) {console.log(result); console.log(error) }); */
   //const data = req.body;
   //console.log(data);
-  const hashedPassword = await bcrypt.hash(password, 10);
+const hashedPassword = await bcrypt.hash(password, 10);
   const normalizedEmail = email.toLowerCase();
   const user = new User({
     username: username,
@@ -80,12 +81,12 @@ const register = async (req, res) => {
   //const email_response='';
   user
     .save()
-    /* .then(() =>
+     /* .then(() =>
       emailVerification.sendVerificationEmail(
         user.contact_details.Email,
         user.VerificationToken
       )
-    ) */
+    )  */
     .then(() => {
       const token = jwt.sign(payload(user), process.env.jwt_secret_key);
       return res.json({
@@ -206,18 +207,107 @@ const follow = async (req,res) => {
   }
 }
 
-const signUp = async (req,res) => {
-  const {name,registration_number} =req.body ;
+/* const signUpReg = async (req,res) => {
+  const {registration_number} =req.body ;
 
+   const user = await SecretDetail.find({reg_number:registration_number});
+  // res.json(user[0].reg_number);
+   //const createdUser = await fetch()
+   const email = user[0].reg_email;
+   const college = user[0].college_id;
+   const normalizedEmail = email.toLowerCase();
+
+   //const registration_number = user.reg_number;
+   const student = new User({
    
+   
+    contact_details: {
+      Email: normalizedEmail,
+     
+    },
+  //  password: hashedPassword,
+    isVerified: false,
+   
+    VerificationToken: emailVerification.generateVerificationToken(),
+    academic_details: {
+     
+      college: college,
+      
+      
+      registration_number: registration_number,
+    },
+  });
+  student
+    .save()
+      .then(() =>
+      emailVerification.sendVerificationEmail(
+        user.contact_details.Email,
+        user.VerificationToken
+      )
+    )  
+    .then(() =>  {return res.json(student)})
+    .catch(error =>{ return res.json(error)});
+
 
 
 }
+ */
+const signUpReg = async (req, res) => {
+  const { registration_number } = req.body;
+       console.log(registration_number);
+  try {
+    const user = await SecretDetail.findOne({ reg_number: registration_number.registrationNumber });
+   if(user==null) {
+  return  res.status(404).json({error:"You are not authorized till now.Contact Support!"})
+   }
+
+     console.log(user);
+    const email = user.reg_email;
+    const college = user.college_id;
+    const normalizedEmail = email.toLowerCase();
+
+    const student = new User({
+      contact_details: {
+        Email: normalizedEmail,
+      },
+      isVerified: false,
+      VerificationToken: emailVerification.generateVerificationToken(),
+      academic_details: {
+        college: college,
+        registration_number: registration_number.registrationNumber,
+      },
+    });
+
+    student
+      .save()
+      .then(() => {
+        console.log('Sending verification email...');
+        return emailVerification.sendVerificationEmail(
+          student.contact_details.Email,
+          student.VerificationToken
+        );
+      })
+      .then(() => {
+        console.log('Registration successful:', student);
+        return res.json(student);
+      })
+      .catch(error => {
+        console.error('Error during registration:', error);
+        return res.status(500).json({ error: 'Error during registration' });
+      });
+  } catch (error) {
+    console.error('Error querying database:', error);
+    return res.status(500).json({ error: 'Error querying database' });
+  }
+};
+
+
+
 
 module.exports = {
   register,
   login,
   email_verifier,
   follow,
-  signUp
+  signUpReg
 };

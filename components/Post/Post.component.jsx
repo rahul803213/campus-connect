@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 
 import Alert from "../Alert/Alert";
 import Comment from "../Comment/Comment";
@@ -21,22 +21,52 @@ import { likePost } from "@/redux/post/postSlice";
 import { LikePost } from "@/network/postApi";
 import { followOtherUser } from "@/network/userApi";
 import { BASE_URL } from "@/ClientHelper/config";
-import { handleCommentSubmit } from "@/network/commentApi";
-
+import { fetchCommentsApi, fetchCommentsWithoutApi, handleCommentSubmit } from "@/network/commentApi";
+import { addComment, addCommentEveryTime, setComments ,loadMoreComments} from "@/redux/comment/commentSlice";
 const Post = ({ username, college, content, image, user_profile,id,isLiked,likeCount,likedBy,postowner }) => {
   console.log(username);
   const dispatch=useDispatch();
   const user_id = useSelector(state => state.userReducer.user.user_id);
+  const commenter_image= useSelector(state => state.userReducer.user.user_profile)
+  const comments = useSelector(state => state.commentReducer.comments[id]);
+  const loadMoreCount = useSelector(state => state.commentReducer.loadMoreCounts[id]);
 
+  //const commentsForPost = comments.filter((comment) => comment.postId === id);
+
+  //const comments = comment.filter(c => .postId == id);
+     console.log({"comments from redux":comments})
   const [expanded, setExpanded] = useState(false);
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState('');
 
 
   useEffect(() => {
-    dispatch(fetchComments(id));
-  }, [dispatch, id]);
-
+    const fetchData = async () => {
+    
+      const data = await fetchCommentsWithoutApi();
+      const result = await data.comments;
+       console.log({"data data":result})
+   dispatch(addComment(result));
+    };
+    const fetchDataa = async () => {
+    
+      const data = await fetchCommentsApi(id);
+      const result = await data.comments;
+       console.log({"data data":result})
+   dispatch(setComments({postId:id,comments:result}));
+    };
+  
+          fetchDataa();
+   // dispatch(fetchComments(id));
+    
+  }, [dispatch]);
+  const handleLoadMoreComments = () => {
+    dispatch(loadMoreComments({ postId: id }));
+  };
+  const handleLessComments = () => {
+    dispatch(setComments({ postId: id ,comments:comments}));
+  };
+  const visibleComments = comments?.slice(0, loadMoreCount);
 
 
   const toggleExpansion = () => {
@@ -63,7 +93,8 @@ const Post = ({ username, college, content, image, user_profile,id,isLiked,likeC
   
       if (response.ok) {
         const newCommentData = await response.json();
-        console.log({"newcomment created":newCommentData})
+        dispatch(addCommentEveryTime({postId:id,comment:newCommentData.comment}));
+        console.log({"newcomment created":newCommentData.comment})
         // Handle the successful response, maybe update the state
       } else {
         console.error('Error submitting comment:', response.statusText);
@@ -130,7 +161,7 @@ const handleFollowButton = async(celeb_id) => {
             </div>
             <div className="flex flex-col">
               <span className="h-full w-full font-bold">{username}</span>
-              {/* <span className="truncate	text-[10px]">{college}</span> */}
+               <span className="truncate	text-[10px]">{college}</span> 
             </div>
           </div>
           <div className="flex gap-2 items-center">
@@ -186,7 +217,7 @@ const handleFollowButton = async(celeb_id) => {
               </div>
             </div>
             <div className="flex items-center gap-2 px-4">
-              <BsHeartFill style={{ fontSize: "20px" }} />
+             
               <p className="text-zinc-600 font-lg font-semibold font-sans">
                 {likeCount} likes
               </p>
@@ -194,10 +225,24 @@ const handleFollowButton = async(celeb_id) => {
             {message && <Alert type={messageType} message={message} />}
           </div>
         </footer>
+        <br className="border border-black"/>
         <CommentSubmissionForm
           postId={id}
           onCommentSubmit={handleCommentSubmit}
+          user_profile={commenter_image}
         />
+        <div className={`py-2 px-4  }`} >
+        {  visibleComments?.map((comment) => (
+          <Comment key={comment._id} username={comment.userId.username} profileImage={comment.userId.profileImage}  content={comment.content}  />
+        ))}
+        {/* Load more button */}
+        {loadMoreCount < comments?.length && (
+        <button onClick={handleLoadMoreComments}>See More</button>
+      )}
+      {loadMoreCount == comments?.length && (
+        <button onClick={handleLessComments}>See Less</button>
+      )}
+      </div>
       </div>
     </>
   );

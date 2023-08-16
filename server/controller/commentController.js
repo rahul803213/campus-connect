@@ -22,8 +22,9 @@ const CreateComment =  async (req, res) => {
       parentComment.replies.push(newComment);
       await parentComment.save();
     }
+    const commentToSend = await newComment.populate('userId');
 
-    res.json({ success: true, comment: newComment });
+    res.json({ success: true, comment: commentToSend});
   } catch (error) {
     console.error('Error creating comment:', error);
     res.status(500).json({ success: false, error: 'Server error' });
@@ -46,8 +47,24 @@ const fetchComment =  async (req, res) => {
     res.status(500).json({ success: false, error: 'Server error' });
   }
 }
+
+const fetchCommentWithoutId =  async (req, res) => {
+  try {
+    //const { postId } = req.params;
+    const comments = await Comment.find()
+      .populate('replies')
+      .populate('userId')
+      .exec();
+
+    res.json({ success: true, comments });
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ success: false, error: 'Server error' });
+  }
+}
 module.exports = {
     CreateComment,
-    fetchComment
+    fetchComment,
+    fetchCommentWithoutId
 }
 

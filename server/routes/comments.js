@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/:postId',commentController.fetchComment);
 router.post('/create',commentController.CreateComment);
-
+router.get('/',commentController.fetchCommentWithoutId)
 
 
 
