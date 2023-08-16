@@ -25,7 +25,7 @@ export const getStaticPaths = async () => {
 function PasswordResetPage() {
   const Router = useRouter();
    
-  const { token } = Router.query;
+  const  token  = Router.query;
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
