@@ -1,5 +1,6 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react/cjs/react.development';
 import { fetchCollegesApi } from '@/network/collegeApi';
 import { createDetailsApi } from '@/network/detailsApi';
 import { fetchDetialsApi } from '@/network/detailsApi';
