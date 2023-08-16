@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 let url = ''
 if(process.env.NODE_ENV=='production'){
-   url="https://velvety-babka-4ae196.netlify.app"
+   url="https://sunny-smakager-4b4895.netlify.app/"
 }
 else{
    url="http://localhost:3000"
