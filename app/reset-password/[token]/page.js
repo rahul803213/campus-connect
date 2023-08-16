@@ -5,6 +5,22 @@ import { updatePasswordApi } from '@/network/userApi';
 import { SetMealTwoTone } from '@mui/icons-material';
 import Alert from '@/components/Alert/Alert';    
 import { useRouter } from 'next/navigation';
+export const getStaticPaths = async () => {
+    return {
+      paths: [
+        {
+          params: {
+            token: 'next.js',
+          },
+        }, // See the "paths" section below
+      ],
+      fallback: true, // false or "blocking"
+    }
+  }
+
+
+
+
 
 function PasswordResetPage() {
     const Router= useRouter();
