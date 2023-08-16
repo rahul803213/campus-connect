@@ -9,9 +9,7 @@ import Profile from '@/components/Profile/profile.component'
 import { setCurrentUser } from '@/redux/user/userSlice'
 function P() {
   const Router = useRouter();
-  if (Router.isFallback) {
-    <h1>Data is loading</h1>;
-  }
+  
   const isLoggedIn = useSelector(state => state.userReducer.LoggedIn)
  
   const dispatch = useDispatch();
@@ -21,16 +19,19 @@ function P() {
   if(storedUserDetails) {
     dispatch(setCurrentUser(storedUserDetails));
   }
-  }, [dispatch]);
+  if(!isLoggedIn){
+    
+    Router.push('/reglogin')
+  }
+  }, [dispatch,Router,isLoggedIn]);
   return (
     <>
       {
-        isLoggedIn ?  <div className='flex flex-col w-full items-center gap-10'>
+          <div className='flex flex-col w-full items-center gap-10'>
     
     <Profile />
   </div> 
-  :
-  Router.push('/reglogin') //earlier signin
+  //earlier signin
       }
     </>
    

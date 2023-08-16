@@ -17,13 +17,7 @@ import { getTokenFromLocal, removeTokenFromLocalMeansLogout } from "@/ClientHelp
 //Import ends here
 
 
-const areEqual = (prevProps, nextProps) => {
-  // Only re-render if the user prop changes
-  return prevProps.posts === nextProps.posts;
-};
 
-
-const MemoizedPostParent = React.memo(PostParent, areEqual);
 
 function Home2() {
   const Router = useRouter();
@@ -33,7 +27,9 @@ function Home2() {
   // console.log({"post from reduc":post})
    const token = getTokenFromLocal();
   
-
+useEffect(()=>{
+ if( !(token))  Router.push('/reglogin');
+},[token,Router])
 
   
  // const [post, setPost] = useState();
@@ -67,7 +63,7 @@ function Home2() {
 
   return ( 
      <> { 
-      !(token) ? Router.push('/reglogin'): //earlier singin
+      //earlier singin
      
   <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] w-[80%]">
     <Sidebar />
