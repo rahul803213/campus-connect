@@ -5,27 +5,23 @@ import { updatePasswordApi } from '@/network/userApi';
 import { SetMealTwoTone } from '@mui/icons-material';
 import Alert from '@/components/Alert/Alert';    
 import { useRouter } from 'next/navigation';
-export const getStaticPaths = async () => {
-    return {
-      paths: [
-        {
-          params: {
-            token: '123',
-          },
-        }, // See the "paths" section below
-      ],
-      fallback: true, // false or "blocking"
-    }
-  }
+
+
+export async function getServerSideProps(context) {
+  const { token } = context.query;
+ 
+  
+  return { props: { token } };
+}
 
 
 
 
 
-function PasswordResetPage() {
+function PasswordResetPage({props}) {
   const Router = useRouter();
    
-  const  token  = Router.query;
+ // const  token  = Router.query;
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -40,7 +36,7 @@ function PasswordResetPage() {
       return;
     }
     console.log(newPassword);
-    const data = await updatePasswordApi(newPassword,token)
+    const data = await updatePasswordApi(newPassword,props.token)
      if(data.success){
         setMessagee(data.message);
         setMessageType('success');

@@ -28,7 +28,7 @@ function Home2() {
    const token = getTokenFromLocal();
   
 useEffect(()=>{
- if( !(token))  Router.push('/reglogin');
+ if( (token==undefined) || !token)  Router.push('/reglogin');
 },[token,Router])
 
   
@@ -56,9 +56,7 @@ useEffect(()=>{
 
   
 
-  if (Router.isFallback) {
-    <h1>Data is loading</h1>;
-  }
+ 
 
 
   return ( 
