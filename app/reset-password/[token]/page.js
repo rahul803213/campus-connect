@@ -1,5 +1,5 @@
-'use client'
-import React, { useState,useEffect } from 'react';
+
+import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { updatePasswordApi } from '@/network/userApi';
 import { SetMealTwoTone } from '@mui/icons-material';
@@ -16,9 +16,7 @@ import { useRouter } from 'next/navigation';
 function PasswordResetPage() {
   const Router = useRouter();
   const  {token}  = useParams();;
-  useEffect(() => {
-    console.log('Updated newPassword:', token);
-  }, [token]);
+  
   
   console.log(token);
   const [newPassword, setNewPassword] = useState('');
