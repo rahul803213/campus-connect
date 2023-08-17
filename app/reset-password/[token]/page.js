@@ -1,50 +1,41 @@
-
-import React, { useState } from 'react';
-import { useParams } from 'next/navigation';
-import { updatePasswordApi } from '@/network/userApi';
-import { SetMealTwoTone } from '@mui/icons-material';
-import Alert from '@/components/Alert/Alert';    
-import { useRouter } from 'next/navigation';
-
-
-
-
-
-
-
+"use client";
+import React, { useState } from "react";
+import { useParams } from "next/navigation";
+import { updatePasswordApi } from "@/network/userApi";
+import { SetMealTwoTone } from "@mui/icons-material";
+import Alert from "@/components/Alert/Alert";
+import { useRouter } from "next/navigation";
 
 function PasswordResetPage() {
   const Router = useRouter();
-  const  {token}  = useParams();;
-  
-  
+  const { token } = useParams();
+
   console.log(token);
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [message, setMessage] = useState('');
-  const [messagee,setMessagee]= useState('');
-  const  [messageType,setMessageType]= useState(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [messagee, setMessagee] = useState("");
+  const [messageType, setMessageType] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      setMessage('Passwords do not match');
+      setMessage("Passwords do not match");
       return;
     }
     console.log(newPassword);
-    const data = await updatePasswordApi(newPassword,token)
-     if(data.success){
-        setMessagee(data.message);
-        setMessageType('success');
-        Router.push('/reglogin')
-     }
-     else{
-        setMessage(data.message);
-        setMessageType('error')
-     }
-     
-   /*  try {
+    const data = await updatePasswordApi(newPassword, token);
+    if (data.success) {
+      setMessagee(data.message);
+      setMessageType("success");
+      Router.push("/reglogin");
+    } else {
+      setMessage(data.message);
+      setMessageType("error");
+    }
+
+    /*  try {
       const response = await fetch(`/api/reset-password/${token}`, {
         method: 'POST',
         headers: {
