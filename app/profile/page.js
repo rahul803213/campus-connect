@@ -23,7 +23,7 @@ function P() {
     
     Router.push('/reglogin')
   }
-  }, [dispatch]);
+  }, [dispatch,Router,isLoggedIn]);
   return (
     <>
       {
