@@ -30,14 +30,14 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:4000",
-    "https://sunny-smakager-4b4895.netlify.app",
+    "https://storied-yeot-f64820.netlify.app/",
   ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
 app.use(cors(corsOptions));
 var allow_origin="";
 if(process.env.NODE_ENV=='production'){
-   allow_origin="https://sunny-smakager-4b4895.netlify.app"
+   allow_origin="https://storied-yeot-f64820.netlify.app/"
 }
 else{
    allow_origin="http://localhost:3000"
