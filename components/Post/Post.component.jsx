@@ -218,22 +218,24 @@ const handleFollowButton = async(celeb_id) => {
                 <BsSave style={{ fontSize: "20px" }} />
               </div>
             </div>
-            <div className="flex items-center gap-2 px-4">
+            <div className="flex items-center gap-2 px-2 ">
              
-              <p className="text-zinc-600 font-lg font-semibold font-sans">
+              <p className="text-zinc-600 font-lg  font-sans ">
                 {likeCount} likes
               </p>
             </div>
-            {message && <Alert type={messageType} message={message} />}
-          </div>
-        </footer>
-        <br className="border border-black"/>
-        <CommentSubmissionForm
+            <CommentSubmissionForm
           postId={id}
           onCommentSubmit={handleCommentSubmit}
           user_profile={commenter_image}
+          
         />
-        <div className={`py-2 px-4  }`} >
+            {message && <Alert type={messageType} message={message} />}
+          </div>
+        </footer>
+       
+        
+        <div className={`py-2 px-4 mt-3 }`} >
         {  visibleComments?.map((comment) => (
           <Comment key={comment._id} username={comment.userId.username} profileImage={comment.userId.profileImage}  content={comment.content}  />
         ))}

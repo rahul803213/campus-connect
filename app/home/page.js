@@ -63,7 +63,7 @@ useEffect(()=>{
      <> { 
       //earlier singin
      
-  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] w-[80%]">
+  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] ">
     <Sidebar />
     <div className="flex flex-col w-full sm:w-3/6   ">
       <PostCreate   />

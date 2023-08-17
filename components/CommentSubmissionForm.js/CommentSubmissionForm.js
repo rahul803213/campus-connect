@@ -13,7 +13,7 @@ function CommentSubmissionForm({ postId, onCommentSubmit,user_profile }) {
   };
 
   return (
-    <div className="flex  p-3 gap-2 ">
+    <div className="flex   gap-2 mt-2">
      <div className="w-[30px] h-[30px] rounded-5xl flex items-center justify-center">
               <img
                 src={user_profile}
