@@ -33,7 +33,7 @@ const StudentForm = () => {
         fetchData();
         console.log(details);
         fetchColleges();
-    }, [details]);
+    }, []);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
