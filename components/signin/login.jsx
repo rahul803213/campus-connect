@@ -44,7 +44,7 @@ function Login() {
       if(data.success){
        
         console.log({"After login result":result})
-        setTokenInLocal(data.user_token);//set Token for user
+        setTokenInLocal(result.user_token);//set Token for user
         dispatch(setCurrentUser(result));//redux takes userReducer.user
         sessionStorage.setItem('userDetails' ,JSON.stringify(result));
  

@@ -6,6 +6,8 @@ import { ExploreSharp, Margin } from "@mui/icons-material";
 import Link from "next/link";
 import { GroupSharp } from "@mui/icons-material";
 import { OndemandVideoSharp } from "@mui/icons-material";
+import StorefrontIcon from '@mui/icons-material/Storefront';
+
 import { BusinessCenterSharp } from "@mui/icons-material";
 import AccountCircleSharpIcon from "@mui/icons-material/AccountCircleSharp";
 import HomeIcon from '@mui/icons-material/Home';
@@ -36,10 +38,10 @@ function Header() {
       <div className="flex items-center justify-between gap-8 h-full">
         <div className="hidden lg:flex gap-6 p-2 items-center">
           <HeaderLink Icon={HomeIcon}  text="Home" link="/home" />
-          <HeaderLink Icon={ExploreSharp} text="Discover" link="/search"/>
+          <HeaderLink Icon={ExploreSharp} text="Discover" link="/explore"/>
 
-          <HeaderLink Icon={OndemandVideoSharp} text="Learning" link="/course"/>
-          <HeaderLink Icon={BusinessCenterSharp} text="Jobs" link="/student"/>
+          <HeaderLink Icon={OndemandVideoSharp} text="Learning" link="/learning"/>
+          <HeaderLink Icon={StorefrontIcon} text="Shops" link="/shop"/>
           <HeaderLink Icon={AccountCircleSharpIcon} link="/profile" text="Profile"   />
         </div>
         <div className="flex-1 flex items-center h-full" >

@@ -296,13 +296,19 @@ const signUpReg = async (req, res) => {
       .save()
       .then(() => {
         console.log('Sending verification email...');
-        return emailVerification.sendVerificationEmail(
+         emailVerification.sendVerificationEmail(
           student.contact_details.Email,
           student.VerificationToken
         );
+        
       })
       .then(() => {
         console.log('Registration successful:', student);
+        const token = jwt.sign(payload(user), process.env.jwt_secret_key);
+     /*  return res.json({
+        user_data: UserUtilities.UserModel(student, token),
+        email_response: { message: "verification email sent" },
+      }); */
         return res.json(student);
       })
       .catch(error => {

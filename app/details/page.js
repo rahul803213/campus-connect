@@ -2,16 +2,16 @@
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { fetchCollegesApi } from '@/network/collegeApi';
-import { createDetailsApi } from '@/network/detailsApi';
+import { createDetailsApi,deleteDetailsApi,updateDetailsApi } from '@/network/detailsApi';
 import { fetchDetialsApi } from '@/network/detailsApi';
-
 import Alert from '@/components/Alert/Alert';
 const StudentForm = () => {
     const [colleges, setColleges] = useState([]);
     const [message,setMessage] = useState('');
     const [messageType,setMessageType] = useState(null);
     const [details,setDetails] = useState([]);
-    
+    const [deleteLoading,setDeleteLoading] = useState(false);
+
    
     const [formData, setFormData] = useState({
         name:'',
@@ -60,9 +60,21 @@ const StudentForm = () => {
         <div className='flex flex-col justify-center min-h-screen items-center'>
         {
             details.map(detail => 
-               ( <div key={detail._id} className='flex flex-row gap-2'>
+               ( <div key={detail._id} className='flex flex-row gap-2 justify-center items-center'>
                      <h1>{detail.reg_email}</h1>
                      <h1>{detail.reg_number}</h1>
+                     <button className='border border-red-500 p-4 font-thin rounded-full'
+                      onClick={async()=> {
+                        setDeleteLoading(true)
+                        const data = await deleteDetailsApi(detail._id);
+                        setMessage(data.message);
+        setMessageType('error');
+        setDeleteLoading(false);
+                      }}
+                     >
+                     {deleteLoading? 'Deleting...' :"Delete"}
+                     </button>
+                     <button className='border border-green-500 p-4 font-thin rounded-full'>Update</button>
                </div>)
             )
         }

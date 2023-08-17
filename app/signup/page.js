@@ -8,7 +8,7 @@ function Page() {
       {/* yahan image sahi krna hai */}
       <div className="w-1/2 h-1/2 ">
         <img
-          src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg"
+          src="/sy.jpg"
           alt="signIn"
           className="w-full h-full object-cover"
         />

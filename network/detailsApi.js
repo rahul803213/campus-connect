@@ -31,3 +31,46 @@ export const fetchDetialsApi = async() => {
        throw error;
     }
 };
+
+export const deleteDetailsApi = async(id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/detail/delete`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body: JSON.stringify({id})
+        });
+        const result = await response.json();
+        if(response.ok){
+            return {success:true,message:result.message,data:result.data}
+        }
+        else{
+            return {success:false,message:result.message}
+        }
+    } catch (error) {
+          return {success:false,message:error}
+    }
+}
+export const updateDetailsApi = async(attributes) => {
+    try {
+      const response = fetch(`${BASE_URL}/details/update`,{
+        method:'POST',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify(attributes)
+
+      });
+      const result = await response.json();
+      if(response.ok){
+          return {success:true,message:result.message,data:result.data}
+      }
+      else{
+          return {success:false,message:result.message}
+      }
+
+    } catch (error) {
+        return {success:false,message:error}
+    }
+}
