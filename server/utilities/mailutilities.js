@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 let url = ''
 if(process.env.NODE_ENV=='production'){
-   url="https://storied-yeot-f64820.netlify.app"
+   url="https://campus-connect-3dj6ewtft-rahulkr705018-gmailcom.vercel.app/"
 }
 else{
    url="http://localhost:3000"

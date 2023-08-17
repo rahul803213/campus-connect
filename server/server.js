@@ -31,13 +31,14 @@ const corsOptions = {
     "http://localhost:3000",
     "http://localhost:4000",
     "https://storied-yeot-f64820.netlify.app/",
+    "https://campus-connect-3dj6ewtft-rahulkr705018-gmailcom.vercel.app/"
   ],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
 app.use(cors(corsOptions));
 var allow_origin="";
 if(process.env.NODE_ENV=='production'){
-   allow_origin="https://storied-yeot-f64820.netlify.app/"
+   allow_origin="https://campus-connect-3dj6ewtft-rahulkr705018-gmailcom.vercel.app/"
 }
 else{
    allow_origin="http://localhost:3000"
