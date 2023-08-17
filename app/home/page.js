@@ -12,6 +12,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { useRouter } from "next/navigation";
 import { setPosts } from "@/redux/post/postSlice";
 import PostParent from "@/components/PostParent./PostParent";
+import ParentPostCreate from "@/components/ParentPostCreate/ParentPostCreate";
 import Spinner from "@/components/Spinner/Spinner";
 import { getTokenFromLocal, removeTokenFromLocalMeansLogout } from "@/ClientHelper/authHelper";
 //Import ends here
@@ -63,10 +64,10 @@ useEffect(()=>{
      <> { 
       //earlier singin
      
-  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] ">
+  <div className="flex flex-col sm:flex-row justify-center gap-4  mb-[20px] sm:w-[80%] ">
     <Sidebar />
     <div className="flex flex-col w-full sm:w-3/6   ">
-      <PostCreate   />
+      <ParentPostCreate   />
      <PostParent />
     </div>
 

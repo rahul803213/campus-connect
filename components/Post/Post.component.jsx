@@ -150,7 +150,7 @@ const handleFollowButton = async(celeb_id) => {
   return (
     <>
       {/* must remove mx-auto from below div */}
-      <div className="w-full h-auto my-4 bg-  rounded-md font-serif px-2 hover:shadow-lg ">
+      <div className="w-full h-auto my-4 bg-white  rounded-md font-serif px-2 hover:shadow-lg   ">
         <header className="flex justify-between items-center px-2 h-[50px]">
           <div className="flex gap-2 items-center">
             {/* user-profile */}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import {BsImage,BsCalendar2Event} from 'react-icons/bs'
 import {GrArticle} from 'react-icons/gr'
 import {RiArticleLine} from 'react-icons/ri'
+import PostCreate from "../PostCreate/postcreate.component";
 
 import { useEffect } from "react";
 import { CreatePost } from "@/network/postApi";
@@ -12,7 +13,7 @@ import { addPost } from "@/redux/post/postSlice";
 import { useSelector } from "react-redux";
 import Alert from "../Alert/Alert";
 
-const PostCreate = ( ) => {
+const ParentPostCreate = ( ) => {
  const user_id = useSelector(state => state.userReducer.user.user_id);
  const dispatch= useDispatch();
  const [loading,setLoading] = useState(false);
@@ -20,7 +21,7 @@ const PostCreate = ( ) => {
 
  const [message, setMessage] = useState(null);
  const [messageType, setMessageType] = useState('');
-
+ const [cvisible,setCvisible] = useState(false);
 
   const [content, setContent] = useState({
     poster_id: '',
@@ -89,7 +90,9 @@ dispatch(addPost(response.data));
   const selectedFileName = selectedFile ? selectedFile.name : '';
 
   return (
-    <div className="bg-white rounded-lg p-4 shadow-md w-full fixed ">
+   <>
+     { cvisible ?  <PostCreate /> : ''}
+     <div className="bg-white rounded-lg p-4 shadow-md w-full">
       <form 
         onSubmit={handlePostSubmit}
         className=" flex flex-col gap-2"
@@ -143,7 +146,8 @@ dispatch(addPost(response.data));
         </div>
       </form>
     </div>
+    </>
   );
 };
 
-export default PostCreate;
+export default ParentPostCreate;
