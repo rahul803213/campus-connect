@@ -7,18 +7,13 @@ import Alert from '@/components/Alert/Alert';
 import { useRouter } from 'next/navigation';
 
 
-export async function getServerSideProps(context) {
-  const { token } = context.query;
- 
-  
-  return { props: { token } };
-}
 
 
 
 
 
-function PasswordResetPage({props}) {
+
+function PasswordResetPage({params}) {
   const Router = useRouter();
    
  // const  token  = Router.query;
@@ -36,7 +31,7 @@ function PasswordResetPage({props}) {
       return;
     }
     console.log(newPassword);
-    const data = await updatePasswordApi(newPassword,props.token)
+    const data = await updatePasswordApi(newPassword,params.token)
      if(data.success){
         setMessagee(data.message);
         setMessageType('success');
