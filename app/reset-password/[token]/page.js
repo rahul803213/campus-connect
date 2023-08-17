@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { updatePasswordApi } from '@/network/userApi';
 import { SetMealTwoTone } from '@mui/icons-material';
@@ -13,10 +13,14 @@ import { useRouter } from 'next/navigation';
 
 
 
-function PasswordResetPage({params}) {
+function PasswordResetPage() {
   const Router = useRouter();
-   
- // const  token  = Router.query;
+  const  {token}  = useParams();;
+  useEffect(() => {
+    console.log('Updated newPassword:', token);
+  }, [token]);
+  
+  console.log(token);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
@@ -31,7 +35,7 @@ function PasswordResetPage({params}) {
       return;
     }
     console.log(newPassword);
-    const data = await updatePasswordApi(newPassword,params.token)
+    const data = await updatePasswordApi(newPassword,token)
      if(data.success){
         setMessagee(data.message);
         setMessageType('success');
