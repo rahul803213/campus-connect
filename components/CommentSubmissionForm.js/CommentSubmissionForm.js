@@ -13,22 +13,24 @@ function CommentSubmissionForm({ postId, onCommentSubmit,user_profile }) {
   };
 
   return (
-    <div className="flex flex-row p-3 gap-3 ">
-     <div className="w-[50px] h-[50px]  rounded-5xl flex items-center justify-center">
+    <div className="flex  p-3 gap-2 ">
+     <div className="w-[30px] h-[30px] rounded-5xl flex items-center justify-center">
               <img
                 src={user_profile}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 className="rounded-full"
               />
             </div>
-      <form onSubmit={handleCommentSubmit} className='w-full'>
+      <form onSubmit={handleCommentSubmit} className='w-full flex items-end justify-end text-xs'>
         <input
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          placeholder="Leave a comment..."
-          className='w-[70%] p-2'
+          placeholder="comment here.."
+          className='w-full p-2  border-b focus:border-b-green-400 outline-none rounded-md'
         />
-        <button type="submit" className='w-[20%] p-2 border border-blue text-blue-500' >Comment</button>
+        {comment!=='' && (
+          <button type="submit" className='p-2 px-4 rounded-md text-blue-500 hover:text-white ' >Post</button>
+        )}
       </form>
     </div>
   );
