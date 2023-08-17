@@ -19,7 +19,7 @@ function P() {
   if(storedUserDetails) {
     dispatch(setCurrentUser(storedUserDetails));
   }
-  if(!isLoggedIn){
+  if(!isLoggedIn ){
     
     Router.push('/reglogin')
   }
