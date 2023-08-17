@@ -7,6 +7,7 @@ function SendMail() {
   const [registrationNumber, setRegistrationNumber] = useState('');
   const [message,setMessage] = useState('');
   const [messageType,setMessageType] = useState(null);
+  const [loading,setLoading] = useState(false);
   const handleChange = (event) => {
     const { name,value } = event.target;
     setRegistrationNumber({[name]:value});
@@ -15,7 +16,7 @@ function SendMail() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    setLoading(true);
     try {
         // Call your API function to send the confirmation mail
         const response = await SendVerificationMailApi(registrationNumber);
@@ -33,6 +34,7 @@ function SendMail() {
         console.error('Error sending mail:', error);
         // Handle error or show an error message to the user
       }
+     setLoading(false);
   };
 
   return (
@@ -64,7 +66,7 @@ function SendMail() {
             type="submit"
             className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800"
           >
-            Send Confirmation Mail
+            {loading ? 'Sending Mail...':'Send Confirmation Mail'}
           </button>
         </div>
         {message && <Alert message={message} type={messageType} />}

@@ -1,21 +1,20 @@
 // emailVerification.js
-require('dotenv').config();
+require("dotenv").config();
 
-const nodemailer = require('nodemailer');
-const crypto = require('crypto');
-let url = ''
-if(process.env.NODE_ENV=='production'){
-   url="https://campus-connect-five.vercel.app"
-}
-else{
-   url="http://localhost:3000"
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
+let url = "";
+if (process.env.NODE_ENV == "production") {
+  url = "https://campus-connect-five.vercel.app";
+} else {
+  url = "http://localhost:3000";
 }
 // Create a Nodemailer transporter
 const transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  host:'localhost',
-    port: 587,
-    secure: true,
+  service: "Gmail",
+  host: "localhost",
+  port: 587,
+  secure: true,
   auth: {
     user: process.env.my_email,
     pass: process.env.my_email_password,
@@ -24,7 +23,7 @@ const transporter = nodemailer.createTransport({
 
 // Generate a verification token
 const generateVerificationToken = () => {
-  return crypto.randomBytes(16).toString('hex');
+  return crypto.randomBytes(16).toString("hex");
 };
 
 // Send the verification email
@@ -33,18 +32,18 @@ const sendVerificationEmail = (email, verificationToken) => {
   const mailOptions = {
     from: process.env.my_email,
     to: email,
-    subject: 'Email Verification',
-    text: `Click the following link to verify your email: ${verificationLink}`,
+    subject: "Email Verification",
+    text: `Click the following link to reset or create new password: ${verificationLink}`,
   };
 
   return new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.error('Error sending email:', error);
-        reject('Failed to send verification email');
+        console.error("Error sending email:", error);
+        reject("Failed to send verification email");
       } else {
-        console.log('Verification email sent:', info.response);
-        resolve('Verification email sent');
+        console.log("Verification email sent:", info.response);
+        resolve("Verification email sent");
       }
     });
   });

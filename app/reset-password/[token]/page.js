@@ -16,10 +16,11 @@ function PasswordResetPage() {
   const [message, setMessage] = useState("");
   const [messagee, setMessagee] = useState("");
   const [messageType, setMessageType] = useState(null);
+  const [loading,setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+      setLoading(true);
     if (newPassword !== confirmPassword) {
       setMessage("Passwords do not match");
       return;
@@ -30,11 +31,12 @@ function PasswordResetPage() {
       setMessagee(data.message);
       setMessageType("success");
       Router.push("/reglogin");
+      
     } else {
       setMessage(data.message);
       setMessageType("error");
     }
-
+setLoading(false);
     /*  try {
       const response = await fetch(`/api/reset-password/${token}`, {
         method: 'POST',
@@ -79,7 +81,7 @@ function PasswordResetPage() {
           />
         </div>
         {message && <p>{message}</p>}
-        <button type="submit">Reset Password</button>
+        <button type="submit">{!loading ? 'Reset Password' : 'Resetting...' }</button>
         {messagee && <Alert message={messagee} type={messageType} />}
       </form>
     </div>

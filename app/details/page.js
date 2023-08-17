@@ -56,7 +56,7 @@ const StudentForm = () => {
     };
 
     return (
-        <div className="flex flex-row justify-center items-center min-h-screen gap-5">
+        <div className="flex flex-col justify-center items-center min-h-screen gap-5 sm:flex-row">
         <div className='flex flex-col justify-center min-h-screen items-center'>
         {
             details.map(detail => 

@@ -267,7 +267,16 @@ const signUpReg = async (req, res) => {
     const email = user.reg_email;
     const college = user.college_id;
     const normalizedEmail = email.toLowerCase();
-
+    const AlreadyAUser = await User.findOne({contact_details:{Email:normalizedEmail}});
+    console.log(AlreadyAUser);
+    if(AlreadyAUser){
+      //const updatedUser = await User.updateOne({'contact_details.Ema'})
+      await emailVerification.sendVerificationEmail(
+        AlreadyAUser.contact_details.Email,
+        AlreadyAUser.VerificationToken
+      );
+      return res.json(AlreadyAUser);
+    }
     const student = new User({
       username:user.name,
       password:'',
@@ -355,7 +364,7 @@ const updatePassword = async(req,res) => {
               return res.status(404).json({error:'You are already verified'})
             } */
             console.log(data);
-            const updateData = await User.updateOne({VerificationToken:token},{password:hashedPassword}, { new: true });
+            const updateData = await User.updateOne({'contact_details.Email':data.contact_details.Email},{password:hashedPassword}, { new: true });
             return res.json(updateData)
 
 
