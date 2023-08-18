@@ -31,7 +31,7 @@ const StudentForm = () => {
             setDetails(data);
         }
         fetchData();
-        console.log(details);
+       // console.log(details);
         fetchColleges();
     }, []);
 
