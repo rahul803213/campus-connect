@@ -39,7 +39,7 @@ const Profile = () => {
             <div className='flex flex-col items-center w-full bg-white rounded-lg drop-shadow-lg pb-[80px] sm:pb-[150px]'>
                 <div className='relative w-full h-[150px] sm:h-[250px] bg-slate-100'>
                     <img 
-                      src='https://media.licdn.com/dms/image/D4D16AQFYInI92MvQBw/profile-displaybackgroundimage-shrink_350_1400/0/1683095854548?e=1697068800&v=beta&t=7-OQihOlvV0g6CiFP3Gx0IuN6W9bbsiUmV0stApOjew'
+                    src='https://i.stack.imgur.com/cEz3G.jpg'
                       alt="bgprofile" 
                       className='w-full h-full rounded-md object-clip'
                     />

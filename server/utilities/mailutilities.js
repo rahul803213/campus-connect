@@ -92,7 +92,7 @@ const sendVerificationEmail = (email, verificationToken) => {
                 <a href=${verificationLink} class="button">Reset Password</a>
                 <p>If you didn't request this, you can safely ignore this email.</p>
                 <p>Best regards,</p>
-                <p>Your Team</p>
+                <p>Campus Connect</p>
             </div>
         </div>
     </body>

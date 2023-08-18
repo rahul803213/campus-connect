@@ -5,6 +5,7 @@ import { useDispatch,useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/Header/Header.component'
 import Profile from '@/components/Profile/profile.component'
+import LinkedInProfile from '@/components/ProfileCopies.js/ProfileCopied';
 
 import { setCurrentUser } from '@/redux/user/userSlice'
 function P() {
@@ -29,7 +30,7 @@ function P() {
       {
           <div className='flex flex-col w-full items-center gap-10'>
     
-    <Profile />
+    <LinkedInProfile />
   </div> 
   //earlier signin
       }

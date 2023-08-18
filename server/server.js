@@ -12,7 +12,8 @@ const posts = require("./routes/posts");
 const colleges = require("./routes/colleges");
 const details = require("./routes/SecretDetails");
 const comments = require("./routes/comments");
-const universities = require("./routes/universities")
+const universities = require("./routes/universities");
+const teacherdetails = require("./routes/teacheremails")
 const cloudinary = require("cloudinary");
 
 //database
@@ -68,6 +69,7 @@ app.use('/university',universities)
 app.use("/detail", details);
 app.use("/post",posts);
 app.use("/comment",comments)
+app.use("/teacherdetail",teacherdetails)
 app.get("/", (req, res) => {
   res.json({ name: "rahul" });
 });
