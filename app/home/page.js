@@ -35,7 +35,7 @@ useEffect(()=>{
  // dispatch(removeCurrentUser());
   removeTokenFromLocalMeansLogout();
   Router.push('/reglogin');}
-},[token,Router,dispatch])
+},[token,Router])
 
   
  // const [post, setPost] = useState();

@@ -152,3 +152,27 @@ export const updatePasswordApi = async (password,token) => {
        return {success:false,message:data.error}
   }
 }
+
+export const fetchUserById = async (id) => {
+  try {
+    const response = await fetch(`${BASE_URL}/user/fetch`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify({id})
+    });
+   // console.log(await response.json());
+    return await response.json();
+  } catch (error) {
+      return error;
+  }
+}
+export const fetchAllUserApi = async() => {
+  try {
+    const response = await fetch(`${BASE_URL}/user`);
+    return await response.json();
+  } catch (error) {
+    return error;
+  }
+}

@@ -381,8 +381,30 @@ const updatePassword = async(req,res) => {
        
 
 }
+const fetchUser = async(req,res) => {
+  try {
+    const id=req.body.id;
+    const response =await User.findOne({_id:id});
+    if(response){
+      return await res.json(response);
+    }
+    else{
+     return res.status(404).json({message:"User Not Found!"})
+    }
+  } catch (error) {
+    return res.status(500).json({message:"Server error"})
+  }
+}
 
-
+const fetchAllUser = async(req,res) => {
+  try {
+    const data = await User.find();
+    return await res.json(data);
+    
+  } catch (error) {
+    return error;
+  }
+}
 
 module.exports = {
   register,
@@ -391,5 +413,7 @@ module.exports = {
   follow,
   signUpReg,
   loginReg,
-  updatePassword
+  updatePassword,
+  fetchAllUser,
+  fetchUser
 };

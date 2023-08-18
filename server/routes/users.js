@@ -3,7 +3,7 @@ const userControllers = require("../controller/userController");
 const router = express.Router();
 const singleUpload = require("../middelware/multer");
 
-router.get("/", (req, res) => res.send("this is user"));
+router.get("/", userControllers.fetchAllUser);
 router.post("/register", singleUpload,userControllers.register);
 router.post("/login", userControllers.login);
 //router.post('/signup',singleUpload,userControllers.signUp)
@@ -12,5 +12,6 @@ router.post("/:celeb_id/follow",userControllers.follow)
 router.post('/sendmail',userControllers.signUpReg);
 router.post('/update-password',userControllers.updatePassword);
 router.post('/reg-login',userControllers.loginReg);
+router.post('/fetch',userControllers.fetchUser)
 
 module.exports = router;

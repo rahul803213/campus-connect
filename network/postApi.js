@@ -1,10 +1,10 @@
 import { BASE_URL } from '@/ClientHelper/config';
 
 
-export const  fetchPostData = async () => {
+export const  fetchPostData = async (id) => {
     try {
       //  console.log({'env is working':process.env.NEXT_PUBLIC_BACKEND})
-      const response = await fetch(`${BASE_URL}/post`);
+      const response = await fetch(`${BASE_URL}/post?id=${encodeURIComponent(id)}`);
       const jsonData = await response.json();
      // sessionStorage.setItem('postArray' ,JSON.stringify(jsonData));
     return jsonData;

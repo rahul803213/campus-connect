@@ -5,6 +5,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { fetchPostData } from '@/network/postApi';
 import { setPosts } from '@/redux/post/postSlice';
 import Spinner from '../Spinner/Spinner';
+import { BASE_URL } from '@/ClientHelper/config';
 function PostParent() {
 const dispatch = useDispatch();
 const [loading,setLoading] = useState(false);
@@ -14,7 +15,8 @@ console.log({"Posts ":posts});
       setLoading(true);
       const fetchData = async () => {
     
-        const data = await fetchPostData();
+        const res = await fetch(`${BASE_URL}/post`);
+        const data = await res.json();
      dispatch(setPosts(data));
       };
     

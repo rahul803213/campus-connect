@@ -41,9 +41,26 @@ const createPost = async (req, res) => {
 };
 
 const fetchPost = async (req, res) => {
-  const posts = await Post.find().sort({createdAt:-1}).populate("poster", "-password").lean();
-  res.json(posts);
-};
+  try { if (req.query.id) {
+    // If "username" query parameter is provided
+    const id = req.query.id;
+    const Posts = await Post.find({poster:id}).sort({createdAt:-1}).populate("poster", "-password").lean();
+
+    
+      res.json(Posts);
+     
+  } else {
+    // If no "username" query parameter is provided
+    const posts = await Post.find().sort({createdAt:-1}).populate("poster", "-password").lean();
+    res.json(posts);
+  }
+}
+ catch(error) {
+  res.status(500).json({ message: 'Internal server error' });}
+ }
+ /*  const posts = await Post.find().sort({createdAt:-1}).populate("poster", "-password").lean();
+  res.json(posts); */
+
 
 const likePostInServer = async (req,res) => {
  try{

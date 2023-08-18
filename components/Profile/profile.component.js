@@ -46,10 +46,10 @@ const Profile = () => {
 
                     <div className='flex flex-col gap-4 absolute w-[100px] h-[100px] sm:w-[200px] sm:h-[200px]  rounded-full  -translate-y-2/3 left-[100px]'>
              {profile_uri ? <img src={profile_uri} className='w-full h-full object-cover rounded-full bg-white' /> :<AccountCircleIcon className='w-full h-full object-cover rounded-full bg-white'/> }           
-                    <h4 className='text-center font-bold text-2xl'>
-                        {user.user_name}
+                    <h4 className='text-center font-bold text-xl w-full'>
+                        {user.user_name} 
                     </h4>
-                    <h3>follower count is: {followerCount}</h3>
+                   
                     </div>
                 </div>
             </div>
