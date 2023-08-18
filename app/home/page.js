@@ -24,7 +24,7 @@ import { getTokenFromLocal, removeTokenFromLocalMeansLogout } from "@/ClientHelp
 function Home2() {
   const Router = useRouter();
   //const dispatch = useDispatch();
- // const user = useSelector(state=> state.userReducer.user);
+  //const isLoggedIn = useSelector(state=> state.userReducer.LoggedIn);
   //const post = useSelector(state=> state.postReducer.posts);
   // console.log({"post from reduc":post})
   const dispatch = useDispatch();

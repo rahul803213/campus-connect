@@ -48,7 +48,7 @@ function Login() {
         console.log({"After login result":result})
         setTokenInLocal(result.user_token);//set Token for user
         dispatch(setCurrentUser(result));//redux takes userReducer.user
-        localStorage.setItem('userDetails' ,JSON.stringify(result));
+        sessionStorage.setItem('userDetails' ,JSON.stringify(result));
  
     //   console.log( formData );
       Router.push("/home");

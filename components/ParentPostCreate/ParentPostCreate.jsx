@@ -91,7 +91,7 @@ dispatch(addPost(response.data));
     setSelectedFile(null)
     setTimeout(() => {
       setMessage(null);
-    }, 5000);
+    }, 1000);
     setLoading(false);
   };
   const selectedFileName = selectedFile ? selectedFile.name : '';
