@@ -56,8 +56,15 @@ const ParentPostCreate = ( ) => {
   const handlePostSubmit = async (e) => {
     setLoading(true);
     e.preventDefault();
+
     setContent({ ...content, poster_id: user_id });
     console.log({ data: content });
+    if(!content.content && !content.file){
+        setMessage("Empty Can't Be Posted!");
+        setMessageType('error');
+        setLoading(false)
+        return; 
+    }
 
     const response = await CreatePost(content);
 

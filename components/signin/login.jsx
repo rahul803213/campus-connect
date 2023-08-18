@@ -14,6 +14,7 @@ import { SignInUserWithRegNo } from "@/network/userApi";
 function Login() {
   const dispatch = useDispatch();
   const Router = useRouter();
+  const [loading,setLoading] = useState(false);
   const [formData, setFormData] = useState({
     reg_no: "1910510822",
     password: "666666",
@@ -33,6 +34,7 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
    // const url = `${BASE_URL}/user/login`
+   setLoading(true);
     if (formData.reg_no == "" || formData.password == "")
       return res.json({ error: "one of two or may both is empty" });
     try {
@@ -46,7 +48,7 @@ function Login() {
         console.log({"After login result":result})
         setTokenInLocal(result.user_token);//set Token for user
         dispatch(setCurrentUser(result));//redux takes userReducer.user
-        sessionStorage.setItem('userDetails' ,JSON.stringify(result));
+        localStorage.setItem('userDetails' ,JSON.stringify(result));
  
     //   console.log( formData );
       Router.push("/home");
@@ -61,6 +63,7 @@ function Login() {
     } catch (error) {
       console.error("error fetching data at SignIn Component", error);
     }
+    setLoading(false);
     // console.log(formData);
   };
 
@@ -127,7 +130,7 @@ function Login() {
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-800"
             >
               {/* focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 */}
-              Sign in
+            {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
         </form>

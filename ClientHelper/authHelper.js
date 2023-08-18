@@ -15,6 +15,6 @@ export const getTokenFromLocal = () => {
 
 export const removeTokenFromLocalMeansLogout = () => {
     localStorage.removeItem("jwtToken");
-    sessionStorage.removeItem('userDetails');
+    localStorage.removeItem('userDetails');
 
 }
