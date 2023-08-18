@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
 const LinkedInProfile = () => {
     const followerCount = useSelector(state => state.userReducer.user.user_follower_count)
     const user = useSelector(state => state.userReducer.user);
@@ -12,7 +13,7 @@ const LinkedInProfile = () => {
             <div className="relative">
                 <img className="w-full h-40 object-cover rounded-t-lg" src="https://i.stack.imgur.com/cEz3G.jpg" alt="Cover Image" />
                 <div className="absolute left-4 ">
-                    <img className="w-16 h-16 rounded-full" src={profile_uri} alt="Profile Picture" />
+                    <Image height={100} width={100} className="w-16 h-16 rounded-full" src={profile_uri} alt="Profile Picture" />
                 </div>
                 <button className="absolute top-4 right-4 bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 focus:outline-none">Edit Cover</button>
             </div>

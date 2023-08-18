@@ -4,6 +4,7 @@ import Header from "components/Header/Header.component";
 import Login from "@/components/signin/login";
 import { useRouter } from "next/navigation";
 import {  useSelector } from "react-redux";
+import Image from "next/image";
 
 function SignIn() {
   //const isLoggedIn = useSelector((state) => state.userReducer.user);
@@ -18,6 +19,7 @@ function SignIn() {
         <img
           src="https://images.template.net/82880/free-studying-illustration-tmpqs.jpg"
           alt="signIn"
+          
           className="w-full h-full object-cover"
         />
       </div>
