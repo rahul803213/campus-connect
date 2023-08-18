@@ -34,7 +34,7 @@ useEffect(()=>{
  if( (token==undefined) || !token) {
   dispatch(removeCurrentUser());
   Router.push('/reglogin');}
-},[token,Router])
+},[token,Router,dispatch])
 
   
  // const [post, setPost] = useState();
