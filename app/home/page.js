@@ -31,8 +31,9 @@ function Home2() {
    const token = getTokenFromLocal();
   
 useEffect(()=>{
- if( (token==undefined) || !token) {
-  dispatch(removeCurrentUser());
+ if(  !token ) {
+ // dispatch(removeCurrentUser());
+  removeTokenFromLocalMeansLogout();
   Router.push('/reglogin');}
 },[token,Router,dispatch])
 
