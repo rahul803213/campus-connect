@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
 
-        <div className="flex lg:hidden bg-slate-900 w-full justify-between  h-[10vh]  items-center fixed bottom-0 ">
+        <div className="flex lg:hidden bg-slate-900 w-full justify-between  h-[10vh]  items-center fixed bottom-0 px-5">
           <HeaderLink Icon={HomeIcon}  text="Home" link="/home" />
           <HeaderLink Icon={ExploreSharp} text="Explore" link="/explore"/>
           <HeaderLink Icon={OndemandVideoSharp} text="Learning" link="/learning"/>

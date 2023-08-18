@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import HeaderLink from "../HeaderLink/HeaderLink.component";
 import { useRouter } from "next/navigation";
+import { usePathname } from 'next/navigation'
+
 import { ExploreSharp, Margin } from "@mui/icons-material";
 import Link from "next/link";
 import { GroupSharp } from "@mui/icons-material";
@@ -18,11 +20,16 @@ import { useEffect } from "react";
  
 function Header() {
   const Router = useRouter();
+  const path = usePathname();
  const dispatch = useDispatch();
- const isLoggedIn = useSelector(state => state.userReducer.LoggedIn)
+ const isLoggedIn = useSelector(state => state.userReducer.LoggedIn);
+const user = useSelector(state => state.userReducer.user);
+ const [mobile,setMobile] = useState(false);
  console.log({"isLoggedIn":isLoggedIn});
  const [token,setToken] = useState('');
      useEffect(()=>{
+     if(window.innerWidth<800) setMobile(true);
+     console.log(path);
      setToken(getTokenFromLocal());
     //   console.log(userToken);
      },[])
@@ -45,7 +52,19 @@ function Header() {
           <HeaderLink Icon={AccountCircleSharpIcon} link="/profile" text="Profile"   />
         </div>
         <div className="flex-1 flex items-center h-full" >
-         { isLoggedIn ? <button
+         { (mobile && (path!=='/profile')) ? 
+            <div className="mr-5 flex flex-col justify-center items-center"
+             onClick={()=>Router.push('/profile')}>
+           
+           <img src={user.user_profile} 
+          
+           className="w-10 h-10 rounded-full mr-3"/> 
+            <span className=" font-serirf text-center"> {user.user_name}</span>
+           </div>
+           
+           : isLoggedIn 
+           
+           ? <button
             className="text-blue-700 font-semibold rounded-lg border border-2
             border-blue-700 px-4 py-2 transition-all hover:bg-blue-700 hover:text-white hover:border-blue-700"
             onClick={()=>{dispatch(removeCurrentUser());

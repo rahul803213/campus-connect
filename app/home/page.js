@@ -14,6 +14,7 @@ import { setPosts } from "@/redux/post/postSlice";
 import PostParent from "@/components/PostParent./PostParent";
 import ParentPostCreate from "@/components/ParentPostCreate/ParentPostCreate";
 import Spinner from "@/components/Spinner/Spinner";
+//import { useDispatch } from "react-redux";
 import { getTokenFromLocal, removeTokenFromLocalMeansLogout } from "@/ClientHelper/authHelper";
 //Import ends here
 
@@ -26,10 +27,13 @@ function Home2() {
  // const user = useSelector(state=> state.userReducer.user);
   //const post = useSelector(state=> state.postReducer.posts);
   // console.log({"post from reduc":post})
+  const dispatch = useDispatch();
    const token = getTokenFromLocal();
   
 useEffect(()=>{
- if( (token==undefined) || !token)  Router.push('/reglogin');
+ if( (token==undefined) || !token) {
+  dispatch(removeCurrentUser());
+  Router.push('/reglogin');}
 },[token,Router])
 
   
