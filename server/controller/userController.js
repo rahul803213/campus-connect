@@ -6,7 +6,7 @@ const getDataUri = require("../utilities/dataUri");
 const emailVerification = require("../utilities/mailutilities");
 const cloudinary = require("cloudinary").v2;
 require("dotenv").config();
-const SecretDetail = require('../models/SecretDetail')
+const SecretDetail = require("../models/SecretDetail");
 
 //const multer = require('multer')
 
@@ -16,7 +16,7 @@ require("dotenv").config();
 //const upload = multer({ dest: 'uploads/' });
 
 //register function
-const register = async (req, res,userData) => {
+const register = async (req, res, userData) => {
   const {
     username,
     email,
@@ -31,33 +31,33 @@ const register = async (req, res,userData) => {
     registration_number,
   } = req.body;
 
-  
   var profile_uri = "";
   const file = req.file;
-  console.log({"file":file});
+  console.log({ file: file });
   const fileuri = getDataUri(file);
   console.log({ file: file });
   console.log("rahul");
   // const mycloud = await cloudinary.v2.uploader.upload(fileuri.content).catch(error => console.log(error));
   // console.log({ "public id": mycloud.public_id });
   ///console.log({ secure_url: mycloud.secure_url });
-  if(file){
-  try {
-    const uploadResult = await cloudinary.uploader.upload(fileuri.content);
-    console.log("Upload result:", uploadResult);
-    // return uploadResult;
-    profile_uri = uploadResult.url;
-  } catch (error) {
-    console.error("Error uploading to Cloudinary:", error);
-    // throw error; // Rethrow the error to propagate it to the calling code
-  }}
+  if (file) {
+    try {
+      const uploadResult = await cloudinary.uploader.upload(fileuri.content);
+      console.log("Upload result:", uploadResult);
+      // return uploadResult;
+      profile_uri = uploadResult.url;
+    } catch (error) {
+      console.error("Error uploading to Cloudinary:", error);
+      // throw error; // Rethrow the error to propagate it to the calling code
+    }
+  }
   //    console.log(res.json({ picture: req.file.path }));
   /* cloudinary.uploader.upload(profileImage.useTempFiles,
   { public_id: "olympic_flag" }, 
   function(error, result) {console.log(result); console.log(error) }); */
   //const data = req.body;
   //console.log(data);
-const hashedPassword = await bcrypt.hash(password, 10);
+  const hashedPassword = await bcrypt.hash(password, 10);
   const normalizedEmail = email.toLowerCase();
   const user = new User({
     username: username,
@@ -81,7 +81,7 @@ const hashedPassword = await bcrypt.hash(password, 10);
   //const email_response='';
   user
     .save()
-     /* .then(() =>
+    /* .then(() =>
       emailVerification.sendVerificationEmail(
         user.contact_details.Email,
         user.VerificationToken
@@ -180,32 +180,28 @@ const email_verifier = async (req, res) => {
   }
 };
 
-const follow = async (req,res) => {
- try{ 
-  const {follower_id} = req.body;
-  const {celeb_id}=req.params;
-  const celeb = await User.findById(celeb_id);
-  if(celeb){
-    if(!celeb.followers.includes(follower_id)){
-      celeb.followers.push(follower_id);
-      celeb.follower_count=celeb.followers.length;
+const follow = async (req, res) => {
+  try {
+    const { follower_id } = req.body;
+    const { celeb_id } = req.params;
+    const celeb = await User.findById(celeb_id);
+    if (celeb) {
+      if (!celeb.followers.includes(follower_id)) {
+        celeb.followers.push(follower_id);
+        celeb.follower_count = celeb.followers.length;
+      } else {
+        celeb.followers.filter((id) => id !== follower_id);
+        celeb.follower_count = celeb.followers.length;
+      }
+      await celeb.save();
+      res.status(200).json({ message: "You are following Now." });
+    } else {
+      res.status(404).json({ error: "User not found" });
     }
-    else{
-       celeb.followers.filter((id) => id !== follower_id);
-       celeb.follower_count = celeb.followers.length;
-    }
-    await celeb.save();
-    res.status(200).json({ message: 'You are following Now.' });
+  } catch (error) {
+    res.status(500).json({ error: "Server error" });
   }
-  else {
-    res.status(404).json({ error: 'User not found' });
-  }
-
-}
-  catch (error) {
-    res.status(500).json({ error: 'Server error' });
-  }
-}
+};
 
 /* const signUpReg = async (req,res) => {
   const {registration_number} =req.body ;
@@ -254,33 +250,40 @@ const follow = async (req,res) => {
  */
 const signUpReg = async (req, res) => {
   const { registration_number } = req.body;
-       console.log(registration_number);
+  console.log({ registration_number: registration_number });
   try {
-    const user = await SecretDetail.findOne({ reg_number: registration_number.registrationNumber });
-   if(user==null) {
-  return  res.status(404).json({error:"You are not authorized till now.Contact Support!"})
-   }
- /*  if(User.findOne({contact_details:{Email:user.reg_email}})){
+    const user = await SecretDetail.findOne({
+      reg_number: registration_number,
+    });
+    if (user == null) {
+      return res
+        .status(404)
+        .json({ error: "You are not authorized till now.Contact Support!" });
+    }
+    /*  if(User.findOne({contact_details:{Email:user.reg_email}})){
     return  res.status(404).json({error:"An Email is Already Sent"})
   } */
-     console.log(user);
+    console.log(user);
     const email = user.reg_email;
     const college = user.college_id;
     const normalizedEmail = email.toLowerCase();
-    const AlreadyAUser = await User.findOne({contact_details:{Email:normalizedEmail}});
+    const AlreadyAUser = await User.findOne({
+      contact_details: { Email: normalizedEmail },
+    });
     console.log(AlreadyAUser);
-    if(AlreadyAUser){
+    if (AlreadyAUser) {
       //const updatedUser = await User.updateOne({'contact_details.Ema'})
       await emailVerification.sendVerificationEmail(
         AlreadyAUser.contact_details.Email,
         AlreadyAUser.VerificationToken
       );
       return res.json(AlreadyAUser);
+     // console.log(AlreadyAUser);
     }
     const student = new User({
-      username:user.name,
-      password:'',
-      profileImage:`https://robohash.org/${user.name}`,
+      username: user.name,
+      password: "",
+      profileImage: `https://robohash.org/${user.name}`,
       contact_details: {
         Email: normalizedEmail,
       },
@@ -288,40 +291,39 @@ const signUpReg = async (req, res) => {
       VerificationToken: emailVerification.generateVerificationToken(),
       academic_details: {
         college_id: college,
-        registration_number: registration_number.registrationNumber,
+        registration_number: registration_number,
       },
     });
 
     student
       .save()
       .then(() => {
-        console.log('Sending verification email...');
+        console.log("Sending verification email...");
          emailVerification.sendVerificationEmail(
           student.contact_details.Email,
           student.VerificationToken
         );
-        
       })
       .then(() => {
-        console.log('Registration successful:', student);
-        const token = jwt.sign(payload(user), process.env.jwt_secret_key);
-     /*  return res.json({
+        console.log("Registration successful:", student);
+        const token = jwt.sign(payload(student), process.env.jwt_secret_key);
+        /*  return res.json({
         user_data: UserUtilities.UserModel(student, token),
         email_response: { message: "verification email sent" },
       }); */
         return res.json(student);
       })
-      .catch(error => {
-        console.error('Error during registration:', error);
-        return res.status(500).json({ error: 'Error during registration' });
+      .catch((error) => {
+        console.error("Error during registration:", error);
+        return res.status(500).json({ error: "Error during registration" });
       });
   } catch (error) {
-    console.error('Error querying database:', error);
-    return res.status(500).json({ error: 'Error querying database' });
+    console.error("Error querying database:", error);
+    return res.status(500).json({ error: "Error querying database" });
   }
 };
 
-const  loginReg = async(req,res) => {
+const loginReg = async (req, res) => {
   try {
     const { reg_no, password } = req.body;
 
@@ -336,13 +338,13 @@ const  loginReg = async(req,res) => {
     });
 
     if (!user) {
-   return   res.status(404).json({error:'User Not Exist'})
+      return res.status(404).json({ error: "User Not Exist" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
     if (!isPasswordValid) {
-    return  res.status(404).json({error:'Password Is Invalid'})
+      return res.status(404).json({ error: "Password Is Invalid" });
     }
 
     //   const token = jwt.sign(buildToken(user), process.env.TOKEN_KEY);
@@ -350,59 +352,89 @@ const  loginReg = async(req,res) => {
     const token = jwt.sign(payload(user), process.env.jwt_secret_key, {
       expiresIn: "365d", // expires in 365 days
     });
+    console.log({"found user":user});
 
     return res.json(UserUtilities.UserModel(user, token));
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
-}
+};
 
-
-const updatePassword = async(req,res) => {
-   try{
-            const {password,token} = req.body;
-            const data = await User.findOne({VerificationToken:token});
-            if(!data){
-              return  res.status(404).json({error:"Invalid Token!"})
-            }
-            const hashedPassword = await bcrypt.hash(password, 10);
-            /* if(data.isVerified){
+const updatePassword = async (req, res) => {
+  try {
+    const { password, token } = req.body;
+    const data = await User.findOne({ VerificationToken: token });
+    if (!data) {
+      return res.status(404).json({ error: "Invalid Token!" });
+    }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    /* if(data.isVerified){
               return res.status(404).json({error:'You are already verified'})
             } */
-            console.log(data);
-            const updateData = await User.updateOne({'contact_details.Email':data.contact_details.Email},{password:hashedPassword}, { new: true });
-            return res.json(updateData)
-
-
-   }
-   catch(error){
-    return res.json({error:error});
-   }
-       
-
-}
-const fetchUser = async(req,res) => {
+    console.log(data);
+    const updateData = await User.updateOne(
+      { "contact_details.Email": data.contact_details.Email },
+      { password: hashedPassword },
+      { new: true }
+    );
+    return res.json(updateData);
+  } catch (error) {
+    return res.json({ error: error });
+  }
+};
+const fetchUser = async (req, res) => {
   try {
-    const id=req.body.id;
-    const response =await User.findOne({_id:id});
-    if(response){
+    const id = req.body.id;
+    const response = await User.findOne({ _id: id });
+    if (response) {
       return await res.json(response);
-    }
-    else{
-     return res.status(404).json({message:"User Not Found!"})
+    } else {
+      return res.status(404).json({ message: "User Not Found!" });
     }
   } catch (error) {
-    return res.status(500).json({message:"Server error"})
+    return res.status(500).json({ message: "Server error" });
   }
-}
+};
 
-const fetchAllUser = async(req,res) => {
+const fetchAllUser = async (req, res) => {
   try {
     const data = await User.find();
     return await res.json(data);
-    
   } catch (error) {
     return error;
+  }
+};
+const updateProfilePicture = async (req,res) => {
+  try{
+    var profile_uri = "";
+    const file = req.file;
+    const id = req.body.id;
+    console.log(id);
+    console.log({ file: file });
+    const fileuri = getDataUri(file);
+    console.log({ file: file });
+    console.log("rahul");
+    const user = await User.findOne({_id:id});
+   
+    // const mycloud = await cloudinary.v2.uploader.upload(fileuri.content).catch(error => console.log(error));
+    // console.log({ "public id": mycloud.public_id });
+    ///console.log({ secure_url: mycloud.secure_url });
+    if (file) {
+      try {
+        const uploadResult = await cloudinary.uploader.upload(fileuri.content);
+        console.log("Upload result:", uploadResult);
+        // return uploadResult;
+        profile_uri = uploadResult.url;
+        const result = await User.updateOne({_id:id},{$set:{profileImage:profile_uri}})
+      return await res.json(profile_uri);
+      } catch (error) {
+        console.error("Error uploading to Cloudinary:", error);
+        // throw error; // Rethrow the error to propagate it to the calling code
+      }
+    }
+  }
+  catch(error){
+    console.log(error);
   }
 }
 
@@ -415,5 +447,6 @@ module.exports = {
   loginReg,
   updatePassword,
   fetchAllUser,
-  fetchUser
+  fetchUser,
+  updateProfilePicture
 };

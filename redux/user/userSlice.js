@@ -16,10 +16,14 @@ export const user = createSlice({
         removeCurrentUser: (state,action) => {
             state.user = '',
             state.LoggedIn = false
-        }
+        },
+        updateProfileImage: (state, action) => {
+            // Update only the user_profile field with the new image URL or path
+            state.user.user_profile = action.payload;
+          },
        
     }
 });
 
-export const {setCurrentUser, removeCurrentUser} = user.actions;
+export const {setCurrentUser, removeCurrentUser,updateProfileImage} = user.actions;
 export default user.reducer;

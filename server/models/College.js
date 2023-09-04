@@ -7,11 +7,7 @@ const CollegeSchema = new mongoose.Schema({
         unique:true,
         required:true
     },
-    students:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
-       
-    },
+   
     university_id:{
         type:mongoose.Types.ObjectId,
         ref:'University'

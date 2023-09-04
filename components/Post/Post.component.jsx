@@ -154,7 +154,7 @@ const handleFollowButton = async(celeb_id) => {
         <header className="flex justify-between items-center px-2 h-[50px]">
           <div className="flex gap-2 items-center">
             {/* user-profile */}
-            <div className="w-[50px] h-[50px]  rounded-5xl flex items-center justify-center">
+            <div className="w-[40px] h-[40px]  rounded-5xl flex items-center justify-center">
               <img
                 src={user_profile}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}

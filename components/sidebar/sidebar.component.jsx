@@ -10,6 +10,7 @@ import Spinner from "../Spinner/Spinner";
 import { useState } from "react";
 import { setCurrentUser } from "@/redux/user/userSlice";
 import { useDispatch } from "react-redux";
+import Link from "next/link";
 //import bceLogo from '../assets/bceLogo.gif'
 export default function Sidebar() {
   // const user = localStorage.getItem("jwtToken");
@@ -73,12 +74,14 @@ export default function Sidebar() {
 
 const Item_1 = ({ children, text }) => {
   return (
-    <div className="flex gap-3 px-4 py-2 border border-0 w-full items-center text-lg font-medium font-serif cursor-pointer hover:border-r-4 hover:border-green-400 active:border-r-4 hover:bg-gray-900 hover:text-slate-100 ">
+    <Link
+      href={`/${text.toLowerCase()}`}
+     className="flex gap-3 px-4 py-2 border border-0 w-full items-center text-lg font-medium font-serif cursor-pointer hover:border-r-4 hover:border-green-400 active:border-r-4 hover:bg-gray-900 hover:text-slate-100 ">
       {/* icons div */}
       <div className="flex justify-center">{children}</div>
 
       {/* content div */}
       <div className="flex justify-center">{text}</div>
-    </div>
+    </Link>
   );
 };

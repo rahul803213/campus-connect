@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch,useSelector } from 'react-redux'
 import { useRouter } from 'next/navigation'
 import Header from '@/components/Header/Header.component'
-import Profile from '@/components/Profile/profile.component'
+import Profile from '@/components/Profile/profile.component'; 
 import LinkedInProfile from '@/components/ProfileCopies.js/ProfileCopied';
 
 import { setCurrentUser } from '@/redux/user/userSlice'
