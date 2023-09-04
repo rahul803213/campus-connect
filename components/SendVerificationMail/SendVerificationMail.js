@@ -46,9 +46,9 @@ function SendMail() {
       <form className="flex flex-col space-y-6 py-2" onSubmit={handleSubmit}>
         {/* ... */}
         <div>
-          <label className="block text-lg font-medium leading-6 text-gray-900">
+          {/* <label className="block text-lg font-medium leading-6 text-gray-900">
             Registration Number
-          </label>
+          </label> */}
           <div className="mt-2">
             <input
               id="registrationNumber"

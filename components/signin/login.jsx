@@ -102,12 +102,13 @@ function Login() {
                 Password
               </label>
               <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-normal text-indigo-600 hover:text-indigo-800 font-serif"
-                >
-                  Forgot password?
-                </a>
+              <Link
+            prefetch
+            href="/signup"  //register
+            className="cursor-pointer font-normal leading-6 text-indigo-600 hover:text-indigo-800 font-serif"
+          >
+            forgot password
+          </Link>
               </div>
             </div>
             <div className="mt-2">
@@ -139,10 +140,10 @@ function Login() {
           Not a member?&nbsp;
           <Link
             prefetch
-            href="/signup"  //register
+            href="/register-new"  //register
             className="cursor-pointer font-normal leading-6 text-indigo-600 hover:text-indigo-800 font-serif"
           >
-            Register{" "}
+            Register
           </Link>
           {message && <Alert type={messageType} message={message}  />}
         </p>
