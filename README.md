@@ -1,3 +1,33 @@
+
+
+
+
+so here are the current challenges we have to achieve.
+1.typography improvement required at various places:
+    a)explore page
+    b)comment section
+    c)profile page
+2.Displaying proper message and alert based on the event.
+3.Displaying Profile Page and give access to Edit them.
+4.Only load 10 posts from database and load more when user scroll to the last.
+5.Follow Functionality.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
