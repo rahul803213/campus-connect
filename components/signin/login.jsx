@@ -16,8 +16,8 @@ function Login() {
   const Router = useRouter();
   const [loading,setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    reg_no: "",
-    password: "",
+    reg_no: "1910510822",
+    password: "666666",
   });
   //handle change function
   const handlechange = (event) => {
